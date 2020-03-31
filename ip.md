@@ -1,8 +1,6 @@
 ---
 title: IP协议
 date: 2018-07-31 21:30:21
-tags:
-  - TCP
 categories: TCP/IP
 ---
 
