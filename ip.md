@@ -5,7 +5,6 @@ tags:
   - TCP/IP
 categories: TCP/IP
 ---
-{% cq %} 一起聊聊IP协议 {% endcq %}
 <!-- more -->
 ![](http://cdn.xpisme.com/201807311009_917.png)
 
