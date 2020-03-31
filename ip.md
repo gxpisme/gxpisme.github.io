@@ -5,7 +5,7 @@ tags:
   - TCP/IP
 categories: TCP/IP
 ---
-<!-- more -->
+
 ![](http://cdn.xpisme.com/201807311009_917.png)
 
 ## IP (Internet Protocol)
