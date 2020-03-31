@@ -1,3 +1,14 @@
+---
+title: IP协议
+date: 2018-07-31 21:30:21
+tags:
+  - TCP/IP
+categories: TCP/IP
+---
+{% cq %} 一起聊聊IP协议 {% endcq %}
+<!-- more -->
+![](http://cdn.xpisme.com/201807311009_917.png)
+
 ## IP (Internet Protocol)
 ### IP相当于OSI参考模型的第3层-网络层
 网络层的主要作用是“实现终端节点之间的通信”，也称点对点通信，point-to-point。
