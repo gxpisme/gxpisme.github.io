@@ -3,4 +3,4 @@
 
 ## 大图
 
-[](/image/knowledge.png)
+![](/image/knowledge.png)
