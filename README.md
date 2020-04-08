@@ -3,3 +3,4 @@
 
 ## 大图
 
+[](/image/knowledge.png)
