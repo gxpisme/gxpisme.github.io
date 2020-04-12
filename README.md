@@ -40,11 +40,11 @@
 
 ## 应用程序-php
  - [PHP7.2的变量 zval 结构](php7-2-zval.md)
- - [PHP7 扩展开发 ](hello world)](php7-ext.md)
+ - [PHP7 扩展开发 (hello world)](php7-ext.md)
  - [php7 垃圾回收](php7-garbage-collection.md)
  - [PHP7.2之HashTable](php7-hashtable.md)
  - [PHP7 内存管理 （二）](php7-memory-manage.md)
- - [从CGI到PHP-FPM](php-cgi.md)
+ - [PHP 从CGI到PHP-FPM](php-cgi.md)
  - [PHP current、end函数遇到的坑](php-current-end.md)
  - [PHP HashTable](php-hashtable.md)
  - [PHP的生命周期](php-life-cycle.md)
