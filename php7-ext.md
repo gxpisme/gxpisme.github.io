@@ -5,7 +5,6 @@ tags:
     - PHP
 categories: PHP
 ---
-{% cq %} PHP7 扩展开发学习 {% endcq %}
 <!-- more -->
 >学习概念是比较枯燥的事情，只有动手操作才能吸收的更多。从扩展开发开始
 

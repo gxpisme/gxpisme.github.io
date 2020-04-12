@@ -5,7 +5,6 @@ tags:
     - PHP
 categories: PHP
 ---
-{% cq %} HashTable {% endcq %}
 <!-- more -->
 >环境 PHP5.6
 >PHP的数组使用哈希表（HashTable）来存储关联数据，PHP内核中的哈希表是十分重要的数据结构，PHP的大部分的语言特性都是基于哈希表实现的。

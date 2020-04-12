@@ -5,7 +5,6 @@ tags:
     - PHP
 categories: PHP
 ---
-{% cq %} 深入探究PHP5.6 zval结构 {% endcq %}
 <!-- more -->
 >环境 PHP5.6
 >众所周知，PHP是弱类型语言，而C是强类型语言。那强类型语言C是怎么实现弱类型PHP语言的呢，变量在C中是如何定义的呢？

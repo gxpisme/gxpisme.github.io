@@ -5,7 +5,6 @@ tags:
  - PHP
 categories: PHP
 ---
-{% cq %} PHP7的垃圾回收 {% endcq %}
 <!-- more -->
 ## `unset`后的`zval`是不是垃圾
 ```

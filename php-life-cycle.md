@@ -5,7 +5,6 @@ tags:
     - PHP
 categories: PHP
 ---
-{% cq %} 一段PHP程序从执行开始到结束，经历了什么？ {% endcq %}
 <!-- more -->
 >PHP启动 会执行MINIT
 >请求开始 会执行RINIT

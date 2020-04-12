@@ -5,7 +5,6 @@ tags:
     - PHP
 categories: PHP
 ---
-{% cq %} PHP代码 编译过程 {% endcq %}
 <!-- more -->
 >PHP的SAPI，SAPI处于PHP整个架构较上层，而真正脚本的执行主要由Zend引擎来完成。
 

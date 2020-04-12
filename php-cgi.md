@@ -5,7 +5,6 @@ tags:
     - PHP
 categories: PHP
 ---
-{% cq %} 从CGI到PHP-FPM到底经历了什么？ {% endcq %}
 <!-- more -->
 # CGI
 >Web Server 与 Web Application 之间数据交换的一种协议就是CGI。

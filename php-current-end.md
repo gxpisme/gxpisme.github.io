@@ -5,7 +5,6 @@ tags:
     - PHP
 categories: PHP
 ---
-{% cq %} current函数用于取数组第一个值，end函数用于取最后一个值 {% endcq %}
 <!-- more -->
 >环境 PHP7.2
 

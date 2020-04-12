@@ -5,7 +5,6 @@ tags:
     - PHP
 categories: PHP
 ---
-{% cq %} 深入探究PHP7.2 zval结构 {% endcq %}
 <!-- more -->
 >环境 PHP7.2
 >上一节介绍了PHP5.6版本，zval的结构。这节介绍下PHP7.2版本 zval结构。

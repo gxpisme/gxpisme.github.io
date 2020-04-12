@@ -5,7 +5,6 @@ tags:
     - PHP 
 categories: PHP
 ---
-{% cq %} PHP7 内存管理 （二） {% endcq %}
 <!-- more -->
 
 ## 内存初始化
