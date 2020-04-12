@@ -28,7 +28,7 @@
 
 ```
 
-![](/image/knowledge.png)
+<img style=" width: 60%; " src="/image/knowledge.png" />
 
 
 ## 架构
@@ -40,5 +40,7 @@
 ## 应用程序-php
 
 ## 应用程序-java
+
+
 
 
