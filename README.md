@@ -37,6 +37,7 @@
 
 ## 接入层
 - [网关（接入层）介绍](/gateway-introduce)
+- [（Domain Name System）DNS](/gateway-dns)
 
 ## 应用程序-php
  - [PHP7.2的变量 zval 结构](php7-2-zval)
