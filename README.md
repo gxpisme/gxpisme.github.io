@@ -53,6 +53,8 @@
  - [PHP5.6的变量 zval 结构](php-zval)
 
 ## 应用程序-java
+ - [JAVA 切面 AOP(Aspect Oriented Programming)](java-aop)
+ - [JAVA锁-Synchronized](java-synchronized)
 
 
 
