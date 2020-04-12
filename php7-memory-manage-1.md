@@ -79,13 +79,21 @@ struct _zend_mm_chunk {
 ### small(slot)
 
 > slot内存是把若干个page按固定大小分割好的内存块，内存池定义了30种大小的slot内存。
+
 > 最小的slot大小为8byte，最大的为3072byte。
+
 > 0~7递增8byte， 8byte 16byte 24byte 32byte 40byte 48byte 56byte 64byte
+
 > 8~11递增16byte 80byte 96byte 112byte 128byte
+
 > 12~15递增32byte 160byte 192byte 224byte 256byte
+
 > 16~19递增64byte 320byte 384byte 448byte 512byte
+
 > 20~23递增128byte 640byte 768byte 896byte 1024byte
+
 > 24~27递增256byte 1280byte 1536byte 1792byte 2048byte
+
 > 28~29递增512byte 2560byte 3072byte
 
 slot 0~15各占1个page
