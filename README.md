@@ -36,6 +36,7 @@
 - [架构的模式](/architecture-pattern)
 
 ## 接入层
+- [网关（接入层）介绍](/gateway-introduce)
 
 ## 应用程序-php
 
