@@ -5,3 +5,14 @@ subtitle: 我们风华正茂，还有诗和远方。
 description: 我们风华正茂，还有诗和远方。
 author: xpisme
 url: http://gxpisme.github.io
+
+
+
+markdown: kramdown
+
+highlight:
+  enable: true
+  line_number: true
+  auto_detect: true
+  tab_replace:
+
