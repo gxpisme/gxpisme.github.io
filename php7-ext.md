@@ -88,11 +88,15 @@ hello world
 
 编辑`hello/config.m4`文件 移除注释`--enable-hello`
 
+
 将
+
 
 ![](image/date/201806111624_581.png)
 
+
 改为
+
 
 ![](image/date/201806111624_892.png)
 
