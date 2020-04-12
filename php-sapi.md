@@ -6,19 +6,31 @@ tags:
 categories: PHP
 ---
 ### SAPI的示意图
+
 ![](image/date/201804151340_498.png)
+
 ### SAPI的作用
+
 SAPI提供了一个和外部通信的接口。与外部通信一般表现为命令行下、web服务器下调用等。
+
 SAPI可以理解为用于与外部通信的一套接口（协议）。实现这套接口应用于命令行，则在命令行下与PHP内核交互时使用命令行下的这套接口。实现这套接口应用于web服务器，则在web服务器下与PHP内核交互时使用web服务器下的这套接口。
+
 ### 每个SAPI源码的目录
+
 ![](image/date/201804151336_901.png)
+
 ### 利用`php_sapi_name`函数确定使用的那种`sapi`
+
 在命令行下运行，则使用cli实现的sapi
+
 ![](image/date/201804151353_704.png)
+
 在web服务器（Nginx）下运行，则使用fpm实现的sapi
+
 ![](image/date/201804151355_2.png)
 
 ### SAPI的结构体`sapi_module_struct`
+
 ```
 main/SAPI.h
 
@@ -64,8 +76,8 @@ struct _sapi_module_struct {
 
     int (*force_http_10)(void);
 
-    int (*get_target_uid)(uid_t *); 
-    int (*get_target_gid)(gid_t *); 
+    int (*get_target_uid)(uid_t *);
+    int (*get_target_gid)(gid_t *);
 
     unsigned int (*input_filter)(int arg, char *var, char **val, size_t val_len, size_t *new_val_len);
 
@@ -79,6 +91,7 @@ struct _sapi_module_struct {
 ```
 
 #### `cli`模式的`_sapi_module_struct`
+
 ```
 sapi/cli/php_cli.c
 
@@ -114,7 +127,9 @@ static sapi_module_struct cli_sapi_module = {
     STANDARD_SAPI_MODULE_PROPERTIES
 };
 ```
+
 ####  `fpm`模式下的`_sapi_module_struct`
+
 ```
 sapi/fpm/fpm/fpm_main.c
 
@@ -152,30 +167,37 @@ static sapi_module_struct cgi_sapi_module = {
 ```
 
 #### `php_sapi_name`取的值就是`sapi_module`的`name`
+
 ```
 PHP_FUNCTION(php_sapi_name)
 {
     if (zend_parse_parameters_none() == FAILURE) {
         return;
-    }    
+    }
 
     if (sapi_module.name) {
         RETURN_STRING(sapi_module.name);
     } else {
         RETURN_FALSE;
-    }    
+    }
 }
 ```
 
 ### TIPS
+
 大家可以观察下sapi/fpm/fpm/fpm_main.c下cgi_sapi_module的sapi_cgi_read_post函数。
+
 然后再观察下sapi/cli/php_cli.c下cli_sapi_module的获取post数据。
+
 发现cli（命令行模式）下获取post数据是NULL，因为命令行下没有POST数据。
 
 你也可以看下获取cookie函数。
 
 
 参考资料
+
 http://www.laruence.com/2008/08/12/180.html
+
 http://www.php-internals.com/book/?p=chapt02/02-02-00-overview
+
 http://php.net/manual/zh/function.php-sapi-name.php
