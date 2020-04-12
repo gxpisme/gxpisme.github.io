@@ -5,7 +5,6 @@ tags:
   - TCP/IP
 categories: TCP/IP
 ---
-{% cq %} 一起聊聊DNS {% endcq %}
 <!-- more -->
 ## hosts文件
 在网络中，联网的计算机之间都是经过IP地址进行通信的。但是IP地址是一串数字，不容易记忆。
