@@ -1,10 +1,6 @@
----
-title: PHP的SAPI
-date: 2018-04-15 13:14:20
-tags:
-    - PHP
-categories: PHP
----
+> SAPI是重要PHP中重要的组成部分。
+
+
 ### SAPI的示意图
 
 ![](image/date/201804151340_498.png)
