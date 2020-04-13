@@ -42,7 +42,7 @@
 ## 应用程序-php
  - [PHP7.2的变量 zval 结构](php7-2-zval)
  - [PHP7 扩展开发 hello world](php7-ext)
- - [php7 垃圾回收](php7-garbage-collect)
+ - [php7 垃圾回收](php7-garbage-collection)
  - [PHP7.2之HashTable](php7-hashtable)
  - [PHP7 内存管理 （一）](php7-memory-manage-1)
  - [PHP7 内存管理 （二）](php7-memory-manage-2)
