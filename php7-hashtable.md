@@ -14,7 +14,7 @@ categories: PHP
 
 <!-- more -->
 
-- **hashtable的基本原理** http://blog.xpisme.com/posts/PHP/2018/04/09/php-hashtable/
+- **hashtable的基本原理** [hashtable的基本原理](/php-hashtable)
 
 ### HashTable的数据结构
 
