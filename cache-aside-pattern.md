@@ -1,9 +1,10 @@
-## 缓存更新 Cache Aside Pattern
+# 缓存更新 Cache Aside Pattern
 
 
 
 
 
+## 问题
 ### 问题1 更新操作  先删缓存，在更新数据库
 
 
