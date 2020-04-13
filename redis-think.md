@@ -5,16 +5,18 @@ tags:
     - Redis
 categories: Redis
 ---
-<!-- more -->
 
-大key
----
+## 大key
 > 大key，并不是指redis的key很大，而是指所对应的value值很大
 
-**背景： ** 由于value很大，导致一次get的时间很长，又由于redis是单进程，所以后面的命令会阻塞，请求会超时。
+**背景： **     由于value很大，导致一次get的时间很长，又由于redis是单进程，所以后面的命令会阻塞，请求会超时。
+
 **图解：**
+
 ![](image/date/201712081837_368.png)
+
 **解决方案：** 拆大key，以hash存储为例
+
 ```
 //将大key映射为多个key来存储该hash。
 
@@ -27,8 +29,7 @@ function myHset($hash, $key, $value) {
 }
 ```
 
-redis分布式锁（简单的实现，满足大部分需要）
----
+## redis分布式锁（简单的实现，满足大部分需要）
 > 分布式锁的应用场景举例：两个请求访问decr库存
 
 ```
@@ -57,8 +58,7 @@ public function unlock($strKey) {
 }
 ```
 
-mget？mset？
----
+## mget？mset？
 > 一次set、get数据不要太多，否则一次获取会导致redis阻塞。
 
 ```
