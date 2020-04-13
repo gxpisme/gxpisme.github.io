@@ -6,12 +6,15 @@ tags:
 categories: Redis
 ---
 
+# 关于redis的一些思考
+
+
 ## 大key
 > 大key，并不是指redis的key很大，而是指所对应的value值很大
 
-**背景： **     由于value很大，导致一次get的时间很长，又由于redis是单进程，所以后面的命令会阻塞，请求会超时。
+背景：由于value很大，导致一次get的时间很长，又由于redis是单进程，所以后面的命令会阻塞，请求会超时。
 
-**图解：**
+图解：
 
 ![](image/date/201712081837_368.png)
 
