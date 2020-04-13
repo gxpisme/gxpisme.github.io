@@ -45,6 +45,7 @@
  - [PHP的生命周期](php-life-cycle)
  - [PHP的编译](php-token)
  - [PHP5.6的变量 zval 结构](php-zval)
+ - [PHP5.6环境搭建 ](php-build-enviorment)
  - [PHP HashTable](php-hashtable)
  - [PHP7.2之HashTable](php7-hashtable)
  - [PHP7.2的变量 zval 结构](php7-2-zval)
