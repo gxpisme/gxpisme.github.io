@@ -1,7 +1,15 @@
 # 缓存更新 Cache Aside Pattern
 
+## 读`read`
+![](image/Cache-Aside-Design-Pattern-Flow-Diagram-e1470471723210.png)
+###  `cache hit` 缓存命中
+应用程序从cache中取数据，取到后返回。
+### `cache miss` 缓存失效
+应用程序先从cache取数据，没有得到，则从数据库中取数据，成功后，放到缓存中。
 
-
+## 更新`update`
+![](image/Updating-Data-using-the-Cache-Aside-Pattern-Flow-Diagram-1-e1470471761402.png)
+先把数据存到数据库中，成功后，再让缓存失效。
 
 
 ## 问题
