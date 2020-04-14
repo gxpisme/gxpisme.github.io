@@ -60,3 +60,5 @@
 
 ## 缓存-redis
  - [关于Redis的思考](redis-think)
+ - [缓存更新 Cache Aside Pattern](cache-aside-pattern)
+
