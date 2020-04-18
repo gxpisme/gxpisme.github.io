@@ -57,7 +57,6 @@
 ## 应用程序-java
  - [JAVA 切面 AOP(Aspect Oriented Programming)](java-aop)
  - [JAVA锁-Synchronized](java-synchronized)
- - JAVA 线程池
 
 
 ## 缓存-redis
