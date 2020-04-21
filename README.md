@@ -58,5 +58,11 @@
  - [JAVA 切面 AOP(Aspect Oriented Programming)](java-aop)
  - [JAVA锁-Synchronized](java-synchronized)
 
+
 ## 缓存-redis
  - [关于Redis的思考](redis-think)
+ - [缓存更新 Cache Aside Pattern](cache-aside-pattern)
+
+
+## 计算机网络-ip
+ - [ip](ip)
