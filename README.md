@@ -63,6 +63,11 @@
  - [关于Redis的思考](redis-think)
  - [缓存更新 Cache Aside Pattern](cache-aside-pattern)
 
+## 数据库-MySql
+ - [MySQL主从服务搭建](mysql-build-master-slave)
+ - [MySQL-InnoDB插入缓冲](mysql-innodb-insert-buffer)
+ - [MySQL-InnoDB 行锁](mysql-innodb-row-lock)
+ - [MySQL 慢SQL](mysql-slow-log)
 
 ## 计算机网络-ip
  - [ip](ip)
