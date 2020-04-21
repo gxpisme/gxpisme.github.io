@@ -7,29 +7,33 @@ categories: 数据库
 ---
 <!-- more -->
 
-配置一主一从
-===
+## 配置一主一从
 > 主(Master)：192.168.56.102
 >
 > 从(Slave)：192.168.56.101
 
-主(Master)：配置/etc/my.cnf(这个路径根据自己的环境)
-===
+
+## 主(Master)：配置文件 `/etc/my.cnf`
 ```
 [mysqld]
-#声明二进制日志文件为mysql-bin.XXXXXX
+# 声明二进制日志文件为mysql-bin.XXXXXX
+
 log-bin=mysql-bin
+
 #二进制格式有三个row/statement/mixed
 #row       记录磁盘改变  适合 执行语句长，改变小
 #statement 记录执行语句 适合 执行语句短 磁盘改变多
 #mixed     row + statement混合
+
 binlog_format=mixed
+
 #给mysql服务一个独特的id，通常为局域网的ip最后一段值
+
 server-id   = 102
 ```
 
-从(Slave)：配置/etc/my.cnf(这个路径根据自己的环境)
-===
+
+## 从(Slave)：配置文件 `/etc/my.cnf`
 ```
 [mysqld]
 log-bin=mysql-bin
@@ -39,8 +43,7 @@ server-id   = 101
 relay-log=mysql-relay
 ```
 
-账号设置
-===
+## 账号设置
 > 主(Master)服务器设置账号
 >
 > 从(Slave)服务器凭借账号去读主(Master)服务器的bin-log日志
@@ -62,13 +65,13 @@ mysql> show master status;
 
 主(Master)设置账号
 ```
-mysql>grant replication client,replication slave on *.* to xp@'192.168.56.%' identified by 'xpisme';
-mysql>flush privileges;
+mysql> grant replication client,replication slave on *.* to xp@'192.168.56.%' identified by 'xpisme';
+mysql> flush privileges;
 ```
 
 从(Slave)关联到主(Master)服务器
 ```
-mysql>change master to
+mysql> change master to
 master_host='192.168.56.102',
 master_user='xp',
 master_password='xpisme',
@@ -78,7 +81,7 @@ master_log_pos=547;
 
 从(Slave)：
 ```
-mysql>start slave;
+mysql> start slave;
 ```
 
-*搞定*
+**搞定**
