@@ -9,8 +9,9 @@ categories: 数据库
 
 配置一主一从
 ===
->主(Master)：192.168.56.102
->从(Slave)：192.168.56.101
+> 主(Master)：192.168.56.102
+>
+> 从(Slave)：192.168.56.101
 
 主(Master)：配置/etc/my.cnf(这个路径根据自己的环境)
 ===
@@ -40,10 +41,13 @@ relay-log=mysql-relay
 
 账号设置
 ===
->主(Master)服务器设置账号
->从(Slave)服务器凭借账号去读主(Master)服务器的bin-log日志
->从(Slave)服务器上注意：master_log_file和master_log_pos这两个选项
->这两个选项应该和show master status;出来的结果一样(因为从哪个文件，哪个位置开始读)
+> 主(Master)服务器设置账号
+>
+> 从(Slave)服务器凭借账号去读主(Master)服务器的bin-log日志
+>
+> 从(Slave)服务器上注意：master_log_file和master_log_pos这两个选项
+>
+> 这两个选项应该和show master status;出来的结果一样(因为从哪个文件，哪个位置开始读)
 
 主(Master)：
 ```
