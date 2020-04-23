@@ -1,11 +1,11 @@
 ---
 title: MySQL主从服务搭建
-date: 2015-05-26 16:00:55
+date: 2015-05-26
 tags:
     - MySQL
 categories: 数据库
 ---
-<!-- more -->
+
 
 ## 配置一主一从
 > 主(Master)：192.168.56.102
