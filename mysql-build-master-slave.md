@@ -29,7 +29,7 @@ binlog_format=mixed
 
 #给mysql服务一个独特的id，通常为局域网的ip最后一段值
 
-server-id   = 102
+server_id   = 102
 ```
 
 
@@ -38,7 +38,7 @@ server-id   = 102
 [mysqld]
 log-bin=mysql-bin
 binlog_format=mixed
-server-id   = 101
+server_id   = 101
 #得到主的bin-log分析后成relay-log才能被自己所用
 relay-log=mysql-relay
 ```
