@@ -26,7 +26,7 @@ mysql> show processlist;
 咱们再来看看Slave的线程列表
 ## Slave processlist
 
-登录`slave`MySql服务器，执行命令`show processlist`，展示线程列表。
+登录`slave MySql`服务器，执行命令`show processlist`，展示线程列表。
 
 ```
 mysql> show processlist;
@@ -40,14 +40,14 @@ mysql> show processlist;
 3 rows in set (0.00 sec)
 ```
 
-这里展示了三个线程，Id分别为7，8，11。
+这里展示了三个线程，`Id`分别为7，8，11。
 
-- Id为`11`的线程，就是执行当前命令的这个线程，可忽略，`Info`信息可以看出。
 
-- Id为`7`的线程，是用来接收master的数据的，其实是存放成`relay log`，`State`信息可以看出来。
+- `Id`为`7`的线程，是用来接收master的数据的，其实是存放成`relay log`，`State`信息可以看出来。
 
-- Id为`8`的线程，是用来读取`relay log`的，然后将这些重放到数据库表中，这样就完成了复制。
+- `Id`为`8`的线程，是用来读取`relay log`的，然后将这些重放到数据库表中，这样就完成了复制。
 
+- `Id`为`11`的线程，就是执行当前命令的这个线程，可忽略，`Info`信息可以看出。
 
 ## 整体看
 Master 只有一个关于复制的线程
