@@ -50,10 +50,10 @@ mysql> show processlist;
 - `Id`为`11`的线程，就是执行当前命令的这个线程，可忽略，`Info`信息可以看出。
 
 ## 整体看
-Master 只有一个关于复制的线程
+`Master` 只有一个关于复制的线程
 
-Slave  有两个关于复制的线程
+`Slave`  有两个关于复制的线程
 
-# Master和Slave的线程是如何配合一起工作的
+# `Master`和`Slave`的线程是如何配合一起工作的
 
 
