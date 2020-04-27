@@ -5,7 +5,7 @@
 
 # 直观的展示
 ## Master processlist
-登录`master`MySql服务器，执行命令`show processlist`
+登录`master`MySql服务器，执行命令`show processlist`，展示线程列表。
 
 ```
 mysql> show processlist;
@@ -17,14 +17,16 @@ mysql> show processlist;
 +----+------+--------------------+------+-------------+-------+-----------------------------------------------------------------------+------------------+
 ```
 
-这里展示的有两个线程，`Id`为6的线程，是把二进制日志`dump`出去，所以对应的`Command`是`Binlog Dump`。
+这里展示的有两个线程
 
-`Id`为8的线程，就是执行当前命令的这个线程，可忽略，`Info`信息可以看出。
+- `Id`为6的线程，是把二进制日志`dump`出去，所以对应的`Command`是`Binlog Dump`。
+
+- `Id`为8的线程，就是执行当前命令的这个线程，可忽略，`Info`信息可以看出。
 
 咱们再来看看Slave的线程列表
 ## Slave processlist
 
-登录`slave`MySql服务器，执行命令`show processlist`
+登录`slave`MySql服务器，执行命令`show processlist`，展示线程列表。
 
 ```
 mysql> show processlist;
@@ -40,11 +42,11 @@ mysql> show processlist;
 
 这里展示了三个线程，Id分别为7，8，11。
 
-Id为`11`的线程，就是执行当前命令的这个线程，可忽略，`Info`信息可以看出。
+- Id为`11`的线程，就是执行当前命令的这个线程，可忽略，`Info`信息可以看出。
 
-Id为`7`的线程，是用来接收master的数据的，其实是存放成`relay log`，`State`信息可以看出来。
+- Id为`7`的线程，是用来接收master的数据的，其实是存放成`relay log`，`State`信息可以看出来。
 
-Id为`8`的线程，是用来读取`relay log`的，然后将这些重放到数据库表中，这样就完成了复制。
+- Id为`8`的线程，是用来读取`relay log`的，然后将这些重放到数据库表中，这样就完成了复制。
 
 
 ## 整体看
