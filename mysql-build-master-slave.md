@@ -63,13 +63,13 @@ mysql> show master status;
 1 row in set (0.00 sec)
 ```
 
-主(Master)设置账号
+在 主(Master)设置账号
 ```
 mysql> grant replication client,replication slave on *.* to xp@'192.168.56.%' identified by 'xpisme';
 mysql> flush privileges;
 ```
 
-从(Slave)关联到主(Master)服务器
+在从(Slave)上操作 从(Slave)关联到主(Master)服务器
 ```
 mysql> change master to
 master_host='192.168.56.102',
@@ -79,7 +79,7 @@ master_log_file='mysql-bin.000015',
 master_log_pos=547;
 ```
 
-从(Slave)：
+在从(Slave)上操作
 ```
 mysql> start slave;
 ```
