@@ -56,4 +56,19 @@ mysql> show processlist;
 
 # `Master`和`Slave`的线程是如何配合一起工作的
 
+## 图解
+
+![](image/imysql-replication.png)
+
+1. Master 会将更改的数据写到二进制日志中，也就是binary log。
+
+2. Slave启动IO线程，IO线程跟主库建立一个普通的客户端连接，然后在主库上启动一个`binlog dump`线程，这个`binlog dump`线程在上面也可以看到，这个`binlog dump`线程会读取主库上二进制日志中的事件。他不会对事件进行轮询，如果该线程追赶上了主库，它将进入sleep状态，直到主库发送信号量通知`binlog dump`线程有新的事件产生，这样`binlog dump`线程就会被唤醒，然后将事件记录到`Relay log`中。
+
+3. Slave SQL线程，读取`Relay log`，然后重放到数据库表中，就完成了复制。
+
+# `binlog_format=statement/row/mixed`
+
+## 基于语句statement的复制
+
+## 基于行 row的复制
 
