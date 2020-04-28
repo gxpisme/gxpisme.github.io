@@ -69,6 +69,31 @@ mysql> show processlist;
 # `binlog_format=statement/row/mixed`
 
 ## 基于语句statement的复制
+这个其实就是SQL语句复制，如果主库上执行`update user set age=age+1 where id = 1`，那么到从库上也会执行相同的语句，这就是基于语句的复制。
+
+这个也是MySQL5.0之前复制模式。
+
+优点
+- 简单，记录和执行这些语句，就能够让主从保持同步
+- 二进制日志里的事件更加紧凑，一条更新几M数据的语句在二进制日志只占几十个字节。
+- 向后兼容，旧版本也是可以使用的。
+
+缺点
+- 必须是串行的
+- 元数据无法正确复制，`CURRENT_USER()`
 
 ## 基于行 row的复制
+这种方式会将真实的数据记录到二进制日志中。
+
+MySQL5.1之后才开始有的
+
+优点
+- 正确地复制每一行
+
+缺点
+- `update table set col1 = 0` 会全表更新，行的复制开销很大，但是语句开销很小。
+
+
+## mixed
+就是statement和row的相结合。
 
