@@ -58,7 +58,7 @@ mysql> show processlist;
 
 ## 图解
 
-![](image/mysql-replication.png)
+![](image/mysql-replication.jpg)
 
 1. Master 会将更改的数据写到二进制日志中，也就是binary log。
 
