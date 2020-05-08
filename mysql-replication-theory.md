@@ -54,11 +54,11 @@ mysql> show processlist;
 
 `Slave`  有两个关于复制的线程
 
-# `Master`和`Slave`的线程是如何配合一起工作的
+# Master和Slave的线程是如何配合一起工作的
 
 ## 图解
 
-![](image/imysql-replication.png)
+![](image/mysql-replication.png)
 
 1. Master 会将更改的数据写到二进制日志中，也就是binary log。
 
