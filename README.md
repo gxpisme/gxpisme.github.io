@@ -65,6 +65,7 @@
 
 ## 数据库-MySql
  - [MySQL主从服务搭建](mysql-build-master-slave)
+ - [MySQL主从复制](mysql-replication-theory)
  - [MySQL-InnoDB插入缓冲](mysql-innodb-insert-buffer)
  - [MySQL-InnoDB 行锁](mysql-innodb-row-lock)
  - [MySQL 慢SQL](mysql-slow-log)
