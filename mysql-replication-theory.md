@@ -66,7 +66,9 @@ mysql> show processlist;
 
 3. Slave SQL线程，读取`Relay log`，然后重放到数据库表中，就完成了复制。
 
-# `binlog_format=statement/row/mixed`
+# 复制格式
+
+> binlog_format=statement/row/mixed
 
 ## 基于语句statement的复制
 这个其实就是SQL语句复制，如果主库上执行`update user set age=age+1 where id = 1`，那么到从库上也会执行相同的语句，这就是基于语句的复制。
