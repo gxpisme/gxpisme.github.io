@@ -107,3 +107,6 @@ MySQL5.1之后才开始有的
 从这三个线程着手，最好实现的是重放线程。有很多库，那就可以每个库都可以开一个线程，这就加快速度了。
 
 
+- [better-parallel-replication-for-mysql](https://medium.com/booking-com-infrastructure/better-parallel-replication-for-mysql-14e2d7857813)
+- [MySQL主从延迟长，如何优化](https://mp.weixin.qq.com/s/pP2f7CYbT7ftM0tvk9c4mQ)
+

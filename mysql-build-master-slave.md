@@ -86,5 +86,5 @@ mysql> start slave;
 
 **搞定**
 
-[linux-installation-yum](https://dev.mysql.com/doc/refman/5.6/en/linux-installation-yum-repo.html)
-[change-master-to](https://dev.mysql.com/doc/refman/5.6/en/change-master-to.html)
+- [linux-installation-yum](https://dev.mysql.com/doc/refman/5.6/en/linux-installation-yum-repo.html)
+- [change-master-to](https://dev.mysql.com/doc/refman/5.6/en/change-master-to.html)
