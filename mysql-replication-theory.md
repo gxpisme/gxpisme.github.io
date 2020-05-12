@@ -99,3 +99,11 @@ MySQL5.1之后才开始有的
 ## mixed
 就是statement和row的相结合。
 
+# 复制加速
+> master 一个 binlog dump线程
+> slave 一个 存放relay log线程
+> slave 另一个 relay log 重放到数据库表线程
+
+从这三个线程着手，最好实现的是重放线程。有很多库，那就可以每个库都可以开一个线程，这就加快速度了。
+
+
