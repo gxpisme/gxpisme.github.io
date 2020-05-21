@@ -82,7 +82,7 @@ URL: http://www.example.net/index.html
 
 
 参考文献
-http://blog.51cto.com/xuweitao/1911227
-https://en.wikipedia.org/wiki/Domain_Name_System
-http://blog.51cto.com/369369/812889
-http://www.ruanyifeng.com/blog/2016/06/dns.html
+- http://blog.51cto.com/xuweitao/1911227
+- https://en.wikipedia.org/wiki/Domain_Name_System
+- http://blog.51cto.com/369369/812889
+- http://www.ruanyifeng.com/blog/2016/06/dns.html
