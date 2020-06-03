@@ -1,6 +1,6 @@
-> 之前只是模糊的知道，事务隔离级别有四个，默认的是REPEATED READ.
+> 之前只是模糊的知道，事务隔离级别有四个，默认的是REPEATABLE READ.
 > 
-> 今天在观察线上DB配置的时候，发现配置的是READ COMMIT。于是找DBA确认，其他线上都是这么配置的吗？DBA确认线上是这个READ COMMIT隔离级别，并表示这种情况已经足够用。
+> 今天在观察线上DB配置的时候，发现配置的是READ COMMITTED。于是找DBA确认，其他线上都是这么配置的吗？DBA确认线上是这个READ COMMITTED隔离级别，并表示这种情况已经足够用。
 >  
 > 脏读 dirty read、幻读 phantom read、不可重复读 Non-Repeatable Read 三者如何定义、什么区别？
 >
@@ -12,8 +12,8 @@
 
 隔离级别由高到低如下
 
-- `SERIALIZABLE`	序列化
-- `REPEATABLE READ` 可重复读 简称RR  (`default` 默认隔离级别)
+- `SERIALIZABLE`     序列化
+- `REPEATABLE READ`  可重复读 简称RR  (`default` 默认隔离级别)
 - `READ COMMITTED`   读已提交 简称RC
 - `READ UNCOMMITTED` 读未提交
 
