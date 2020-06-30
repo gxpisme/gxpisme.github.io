@@ -69,6 +69,7 @@
  - [MySQL-InnoDB插入缓冲](mysql-innodb-insert-buffer)
  - [MySQL-InnoDB 行锁](mysql-innodb-row-lock)
  - [MySQL 慢SQL](mysql-slow-log)
+ - [MySQL-Isolation 隔离级别](mysql-isolation)
 
 ## 计算机网络-ip
  - [ip](ip)
