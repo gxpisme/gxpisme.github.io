@@ -24,6 +24,7 @@ Thread A 第一步和 Thread B第一步是同时的就会导致数据错乱。 �
 > 两个线程同时操作临界资源
 #### 使用 修饰方法&修饰代码块
 ##### 修饰方法 多个线程操作一个实例
+
 ```
 public class AccountingSync implements Runnable{
     /* 共享资源(临界资源) */
