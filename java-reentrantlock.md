@@ -27,6 +27,7 @@ public class AccountingSyncLock implements Runnable {
 
     public void increase(){
         try {
+            // 获取锁，如果获取到了，就可以操作临界资源，i++。
             lock.lock();
             i++;
         } catch (Exception e) {
@@ -51,8 +52,12 @@ public class AccountingSyncLock implements Runnable {
         Thread t2=new Thread(instance);
         t1.start();
         t2.start();
+        // 等待t1线程执行完
         t1.join();
+        // 等待t2线程执行完
         t2.join();
+
+        // 主线线程输出
         System.out.println(i);
     }
 }
