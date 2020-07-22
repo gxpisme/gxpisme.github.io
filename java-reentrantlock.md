@@ -88,10 +88,12 @@ public ReentrantLock() {
      */
     static final class FairSync extends Sync {
         private static final long serialVersionUID = -3000897897090466540L;
-		// lock 设置锁
-        // lock()内部调用acquire(1),为何是”1”呢？
-		// 首先我们知道ReentrantLock是独占锁，1表示的是锁的状态state。
-		// 对于独占锁而言，如果所处于可获取状态，其状态为0，当锁初次被线程获取时状态变成1。
+        /**
+         * lock 设置锁
+         * lock()内部调用acquire(1),为何是”1”呢？
+         * 首先我们知道ReentrantLock是独占锁，1表示的是锁的状态state。
+         * 对于独占锁而言，如果所处于可获取状态，其状态为0，当锁初次被线程获取时状态变成1。
+         */
         final void lock() {
             acquire(1);
         }
