@@ -66,12 +66,11 @@ public class AccountingSyncLock implements Runnable {
 ```
 
 ## 公平锁和非公平锁
-> 里面其实是有一个队列的，用来操作临界资源。
+> 里面其实是有一个队列的，维护多个线程获取同个资源。
 >
 > 公平锁就是将新的线程插入到队列尾部。
 >
 > 非公平锁是将新的线程通过CAS插入头部，如果插入头部失败的话，就插入队列尾部就和公平锁一致了。
-
 
 ```
 一： 内部（AbstractQueuedSynchronizer）维护了一个队列，维护多个线程获取同个资源。
@@ -80,7 +79,6 @@ public ReentrantLock() {
     sync = new NonfairSync();
 }
 ```
-
 
 ### 公平锁
 
