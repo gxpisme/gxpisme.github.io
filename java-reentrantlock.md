@@ -8,7 +8,9 @@ categories: java
 
 ## 背景
 > Synchronized 是一种内置锁，容易使用，但是不容易操作。
+>
 > ReenrantLock 其实也是一种锁， 相比较Synchronized来说，这个锁更加灵活，更容易操作。
+>
 > 为了保障临界资源的数据安全性，就是通过锁来进行保障的。
 
 ## ReentrantLock的使用
@@ -65,7 +67,9 @@ public class AccountingSyncLock implements Runnable {
 
 ## 公平锁和非公平锁
 > 里面其实是有一个队列的，用来操作临界资源。
+>
 > 公平锁就是将新的线程插入到队列尾部。
+>
 > 非公平锁是将新的线程通过CAS插入头部，如果插入头部失败的话，就插入队列尾部就和公平锁一致了。
 
 
