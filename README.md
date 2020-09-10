@@ -58,7 +58,7 @@
  - [JAVA 切面 AOP(Aspect Oriented Programming)](java-aop)
  - [JAVA锁-Synchronized](java-synchronized)
  - [JAVA锁-ReentrantLock](java-reentrantlock)
- - [JAVA-单例](java_single)
+ - [JAVA-单例](java-instance)
 
 ## 缓存-redis
  - [关于Redis的思考](redis-think)
