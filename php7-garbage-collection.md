@@ -14,6 +14,8 @@ categories: PHP
 
 <!-- more -->
 
+# PHP7 垃圾回收
+
 ## `unset`后的`zval`是不是垃圾
 
 ```
