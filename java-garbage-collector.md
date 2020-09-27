@@ -93,6 +93,7 @@ a = null; //a不再引用对象，则该对象其引用计数为0，此时就认
 
 ![](/image/java-garbage-collector-ratio.jpg)
 
+
 设置新生代和老年代的比例 参数是NewRatio
 
 设置Survivor在新生代的比例 参数是SurvivorRatio
@@ -110,6 +111,11 @@ S1C：第二个幸存区的大小
 EC：伊甸园区的大小
 OC：老年代大小
 ```
+
+
+### 一个对象进入老年代的过程
+
+
 
 
 这里就是将这里就是将这里就是将
