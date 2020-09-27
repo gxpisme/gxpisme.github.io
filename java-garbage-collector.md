@@ -115,6 +115,6 @@ OC：老年代大小
 ![](/image/java-garbage-collector-young-gc.jpg)
 
 对象年龄最大为15，因为对象头信息只有4bit来记录年龄。
-设置对象年龄通过该参数进行指定`+XX:MaxTenuringThreshold`
+设置进入老年代的对象年龄通过该参数进行指定`+XX:MaxTenuringThreshold`
 
 
