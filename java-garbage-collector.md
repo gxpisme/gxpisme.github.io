@@ -103,7 +103,7 @@ java -XX:+PrintFlagsFinal -version | grep NewRatio      查看新生代和老年
 
 java -XX:+PrintFlagsFinal -version | grep SurvivorRatio  查看Survivor在新生代 默认内存比例
 
-jstas -gc pid
+jstat -gc pid  可以查看真实的大小，然后自己可以计算下比例。
 
 S0C：第一个幸存区的大小
 S1C：第二个幸存区的大小
