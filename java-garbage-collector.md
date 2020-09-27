@@ -91,7 +91,18 @@ a = null; //a不再引用对象，则该对象其引用计数为0，此时就认
 新生代（Young）这里就是将绝大多数对象存在了新生代，因为绝大多数对象都是朝生夕灭的。
 老年代（Old）这存了经过多次垃圾收集过程，依然存活的对象。
 
+![](java-garbage-collector-ratio.jpg)
 
+设置新生代和老年代的比例 参数是NewRatio
+
+设置Survivor在新生代的比例 参数是SurvivorRatio
+
+
+```
+java -XX:+PrintFlagsFinal -version | grep NewRatio      查看新生代和老年代  默认内存比例
+
+java -XX:+PrintFlagsFinal -version | grep SurvivorRatio  查看Survivor在新生代 默认内存比例
+```
 
 
 这里就是将这里就是将这里就是将
