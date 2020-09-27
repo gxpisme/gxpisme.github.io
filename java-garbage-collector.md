@@ -129,3 +129,27 @@ OC：老年代大小
 
 Full GC = YoungGC + OldGC
 
+
+
+## 垃圾收集器
+### 新生代
+- Serial 单线程工作的收集器 （标记复制算法）
+- ParNew 多线程工作的收集器（标记复制算法）
+- Parallel Scavenge 多线程工作收集器（标记复制算法）
+### 老年代
+- Serial Old 单线程工作收集器（标记整理算法）
+- Parallel Old 多线程工作收集器（标记整理算法）
+- CMS 多线程工作收集器（标记清除算法）
+
+Serial 和 Serial Old 配合
+ParNew 和 CMS 配合
+Parallel Scavenge 和 Parallel Old 配合
+
+CMS收集器是一种以获取最短回收停顿时间为目标的收集器。
+
+CMS使用的是标记清除算法，所以会产生碎片，实际上。ParNew和CMS进行搭配的时候，特殊的时候需要内存整理时，偶尔还会用到Serial Old收集器。
+
+查看使用的哪个收集器 `java -XX:+PrintCommandLineFlags -version`
+- `-XX:+UseParallelGC` 代表Parallel Scavenge 和 Parallel Old 配合
+- `-XX:+UseConcMarkSweepGC -XX:+UseParNewGC` 代表的是ParNew 和 CMS 配合
+
