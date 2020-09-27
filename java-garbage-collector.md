@@ -120,10 +120,12 @@ OC：老年代大小
 ### 新生代
 > 新生代 采用标记复制算法
 
-新生代产生垃圾回收又称为 YoungGC
+新生代产生垃圾回收又称为 YoungGC  也称为Mirror gc
 
 ### 老年代
 > 老年代 采用标记整理算法
 
-老年代产生垃圾回收被称为 Full GC
+老年代产生垃圾回收被称为 OldGC 也称为 Major GC
+
+Full GC = YoungGC + OldGC
 
