@@ -102,6 +102,9 @@ a = null; //a不再引用对象，则该对象其引用计数为0，此时就认
 java -XX:+PrintFlagsFinal -version | grep NewRatio      查看新生代和老年代  默认内存比例
 
 java -XX:+PrintFlagsFinal -version | grep SurvivorRatio  查看Survivor在新生代 默认内存比例
+
+jstas -gc pid
+
 ```
 
 
