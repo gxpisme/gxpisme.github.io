@@ -51,6 +51,10 @@ a = null; //a不再引用对象，则该对象其引用计数为0，此时就认
 ## 垃圾清理？
 ### 垃圾清理算法
 #### 标记清除(Mark-Sweep)
+![](/image/java-garbage-collector-mark-sweep.jpg)
 
 #### 标记复制(Mark-Copy)
+![](/image/java-garbage-collector-mark-copy.jpg)
+
 #### 标记整理(Mark-Compact)
+![](/image/java-garbage-collector-mark-compact.jpg)
