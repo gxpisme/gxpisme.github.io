@@ -112,10 +112,7 @@ EC：伊甸园区的大小
 OC：老年代大小
 ```
 
-
-### 一个对象进入老年代的过程
-
-
+![](/image/java-garbage-collector-young-gc.jpg)
 
 
 这里就是将这里就是将这里就是将
