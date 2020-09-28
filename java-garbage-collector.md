@@ -132,7 +132,8 @@ OC：老年代大小
 
 老年代产生垃圾回收被称为 OldGC 也称为 Major GC
 
-Full GC = YoungGC + OldGC
+
+`Full GC = YoungGC + OldGC`
 
 
 ### 跨代引用
