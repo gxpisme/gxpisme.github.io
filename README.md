@@ -61,6 +61,7 @@
  - [JAVA-单例](java-instance)
  - [JAVA-动态代理-学习笔记](java-dynamic-proxy-study-note)
  - [JAVA-类加载](java-classloader)
+ - [JAVA-垃圾回收](java-garbage-collector)
 
 ## 缓存-redis
  - [关于Redis的思考](redis-think)
