@@ -4,7 +4,7 @@
 
 ## 内存可见
 
-![](java-volatile-memory-visible.jpg)
+![](/image/java-volatile-memory-visible.jpg)
 
 ### 不加volatile 内存不可见
 ```
