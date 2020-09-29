@@ -10,28 +10,33 @@
 
 ### 不加volatile 内存不可见
 ```
-public class See {
-    public static volatile boolean flag = true;
+public class Demo {
+    public static boolean flag = true;
 
     public static void main(String[] args) throws InterruptedException {
 
+        // 启动一个线程
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
+                // 从主内存中读取flag值 若flag为true 则一直执行
                 while (flag) {
-                    System.out.println("running");
                 }
+                // 若flag为true 那么done能打印出来了
                 System.out.println("done");
             }
         });
 
         thread.start();
-
+        
+        // 设置主内存的flag为true
         flag = false;
     }
 }
 ```
+该代码永远也不会输出done，因为工作线程`thread`不会从主内存中再去加载flag值，因此工作线程中flag值一直为true。
 
+这种就是工作线程对主内存不可见，主内存修改值，工作线程不可见，不知道。
 
 ### 加volatile内存可见
 
