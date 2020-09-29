@@ -47,6 +47,21 @@ public class Demo {
 
 所以线程one或线程two取的值，一定是有旧的值，拿些旧的值进行操作，所以就会出现最终值小于2亿的情况。
 
+![](java-volatile-memory-visible.jpg)
+
+- 每个线程都有自己的工作内存，会将主内存中的值取到，然后进行操作，然后塞入到主内存中。
+
+如果为n进行volatile进行修饰，在看下结果。
+
+```
+    public static int n = 0;
+改为
+    public static volatile int n = 0;
+
+程序的结果就是两亿了。
+```
+
+
 
 
 
