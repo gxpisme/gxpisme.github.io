@@ -51,7 +51,7 @@ public class Demo {
 
 - 每个线程都有自己的工作内存，会将主内存中的值取到，然后进行操作，然后塞入到主内存中。
 
-如果为n进行volatile进行修饰，在看下结果。
+**如果为n进行volatile进行修饰，在看下结果。**
 
 ```
     public static int n = 0;
