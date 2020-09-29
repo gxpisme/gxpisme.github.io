@@ -1,12 +1,12 @@
-# Java Volidate 学习笔记
+# Java volatile 学习笔记
 
-> volidate 在java中有两个作用，一是内存可见，二是禁止指令重排序。
+> volatile 在java中有两个作用，一是内存可见，二是禁止指令重排序。
 
 ## 内存可见
 
 ![](java-volatile-memory-visible.jpg)
 
-### 不加volidate 内存不可见
+### 不加volatile 内存不可见
 ```
 public class See {
     public static volatile boolean flag = true;
@@ -31,7 +31,7 @@ public class See {
 ```
 
 
-### 加volidate内存可见
+### 加volatile内存可见
 
 ## 指令重排序
 
