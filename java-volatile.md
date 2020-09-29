@@ -4,6 +4,8 @@
 
 ## 内存可见
 
+### JMM (Java Memory Model) java内存模型
+
 ![](/image/java-volatile-memory-visible.jpg)
 
 ### 不加volatile 内存不可见
