@@ -29,16 +29,16 @@ public class Demo {
 
         thread.start();
         
-        // 设置主内存的flag为true
+        // 当前线程设置flag为false，那么主内存中flag也就为false了。
         flag = false;
     }
 }
 ```
-该代码中有两个线程，一个是主线程，一个是子线程。在主线程中设置`flag=false`，在主内存flag为false。
 
-但是在子线程中，flag值一直为true，因为子线程不会从主内存中再加载flag值。
+该代码永远也不会输出done，因为工作线程`thread`不会从主内存中再去加载flag值，因此工作线程中flag值一直为true。
 
-这种就是工作子线程对主内存不可见，主内存修改值，工作线程不知道，不可见。
+这种就是工作线程对主内存不可见，主内存修改值，工作线程不知道，不可见。
+
 
 ### 加volatile内存可见
 
@@ -62,11 +62,16 @@ public class Demo {
 
         thread.start();
         
-        // 设置主内存的flag为true
+        // 当前线程设置flag为false，那么主内存中flag也就为false了。
         flag = false;
     }
 }
 ```
+
+该代码会输出done，因为工作线程`thread`会从主内存中再去加载flag值，因此当`main`线修改flag为false时，
+
+由于flag是用volatile来修饰的，所以工作线程`thread`中flag会通知失效，重新会从主内存中拉取该flag值。
+
 
 
 
