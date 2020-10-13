@@ -151,6 +151,17 @@ public class ReOrder {
 
 ### 为什么在单例中会用到volatile
 
+```
+代码         Object o = new Object();
+
+反编译后的指令代码
+
+         0: new           #2                  // class java/lang/Object                     申请空间
+         3: dup
+         4: invokespecial #1                  // Method java/lang/Object."<init>":()V       初始化对象
+         7: astore_1                                                                        建立变量与对象的关系
+         8: return
+```
 
 
 ## 参考资料
