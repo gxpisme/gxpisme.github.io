@@ -75,6 +75,75 @@ public class Demo {
 此时就实现了内存可见
 
 ## 指令重排序
+```
+public class ReOrder {
+    private static int x = 0, y = 0;
+    private static int a = 0, b = 0;
+
+    public static void main(String[] args) throws InterruptedException {
+        int i = 0;
+        while (true){
+            i++;
+            x = 0;
+            y = 0;
+            a = 0;
+            b = 0;
+            Thread one = new Thread(new Runnable() {
+                public void run() {
+                    a = 1;
+                    x = b;
+                }
+            });
+
+            Thread other = new Thread(new Runnable() {
+                public void run() {
+                    b = 1;
+                    y = a;
+                }
+            });
+            one.start();
+            other.start();
+            one.join();
+            other.join();
+            String result = "第" + i + "次 (" + x + "," + y + "）";
+            if (x == 0 && y == 0) {
+                System.err.println(result);
+                break;
+            }
+        }
+    }
+}
+```
+
+分析下代码
+
+每次循环时，默认x=0,y=0,a=0,b=0。
+
+线程one 设置a=1,x=b;  线程other 设置b=1,y=a
+
+然后线程one和线程other开始执行。
+
+如果线程one先执行，线程other再执行。顺序为`a=1,x=b,b=1,y=a`，那么结果为x=0,y=1
+
+如果线程other先执行，线程one再执行。顺序为`b=1,y=a,a=1,x=b`，那么结果为x=1,y=0
+
+如果线程one和线程other同时执行，顺序为`a=1,b=1,x=b,y=a`（`a=1,b=1`可互换，`x=b,y=a`可互换）,那么结果为x=1，y=1。
+
+但是无论上述哪种情况，结果都不会出现x=0,y=0的情况。
+
+如果出现这种情况，执行顺序应该为`x=b,y=a,b=1,a=1`, 但是线程one设置顺序a=1,x=b; 线程other设置顺序b=1,y=a，
+
+那么肯定发生了线程one x=b先于a=1执行 或者 线程other y=a先于b=1执行。
+
+但是实际运行中确实出现了x=0,y=0的情况，就证明了重排序的情况。（我自己操作中出现了 第1363751次 (0,0））
+
+若用volatile来修饰x、y、a、b，就永远不会出现x=0,y=0的情况。
+
+
+### 为什么有指令重排序？
+> 为了压榨CPU，提高CPU利用率。
+
+
 
 
 ## 参考资料
