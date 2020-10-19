@@ -50,3 +50,5 @@ function quickSort($arr) {
 }
 ```
 
+![](/image/algorithm-quicksort.gif)
+
