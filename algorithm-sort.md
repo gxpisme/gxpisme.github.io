@@ -23,6 +23,7 @@ function bubbleSort($arr) {
 ```
 
 ## 快速排序
+![](/image/algorithm-quicksort.gif)
 ```php
 function quickSort($arr) {
     $len = count($arr);
@@ -50,9 +51,9 @@ function quickSort($arr) {
 }
 ```
 
-![](/image/algorithm-quicksort.gif)
-
 ## 归并排序
+![](/image/algorithm-mergesort.gif)
+
 ```php
 
 function mergeSortMain($arr) {
@@ -96,10 +97,9 @@ function mergeSort($one, $two) {
 }
 ```
 
-![](/image/algorithm-mergesort.gif)
-
-
 ## 选择排序
+
+![](/image/algorithm-selectionsort.gif)
 ```php
 
 function selectionSort($arr) {
