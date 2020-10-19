@@ -94,5 +94,7 @@ function mergeSort($one, $two) {
 
     return $tmp;
 }
-
 ```
+
+![](/image/algorithm-mergesort.gif)
+
