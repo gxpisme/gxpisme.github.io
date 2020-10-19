@@ -98,3 +98,30 @@ function mergeSort($one, $two) {
 
 ![](/image/algorithm-mergesort.gif)
 
+
+## 选择排序
+```php
+
+function selectionSort($arr) {
+    $len = count($arr);
+    if ($arr <= 1) {
+        return $arr;
+    }
+
+    for ($i = 0; $i < $len; $i++) {
+        $k = $i;
+        for ($j = $i + 1; $j < $len; $j++) {
+            if ($arr[$k] < $arr[$j]) {
+                $k = $j;
+            }
+        }
+        if ($k != $i) {
+            $t = $arr[$k];
+            $arr[$k] = $arr[$i];
+            $arr[$i] = $t;
+        }
+    }
+
+    return $arr;
+}
+```
