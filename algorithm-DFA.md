@@ -1,11 +1,84 @@
 # 敏感词树 DFA
 
+
+## 构建敏感词树
+```
+$obj = new DFA();
+$obj->addKeyWord('王八蛋');
+$obj->addKeyWord('王八羔子');
+$obj->addKeyWord('香烟');
+$obj->addKeyWord('狗儿子');
+$obj->getHashMap();
+
+
+Array
+(
+    [王] => Array
+        (
+            [end] => 0
+            [八] => Array
+                (
+                    [end] => 0
+                    [蛋] => Array
+                        (
+                            [end] => 1
+                        )
+
+                    [羔] => Array
+                        (
+                            [end] => 0
+                            [子] => Array
+                                (
+                                    [end] => 1
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [香] => Array
+        (
+            [end] => 0
+            [烟] => Array
+                (
+                    [end] => 1
+                )
+
+        )
+
+    [狗] => Array
+        (
+            [end] => 0
+            [儿] => Array
+                (
+                    [end] => 0
+                    [子] => Array
+                        (
+                            [end] => 1
+                        )
+
+                )
+
+        )
+
+)
+```
+
+## 判断敏感词是否是敏感词树
+```
+var_dump($obj->searchKey('王八蛋'));
+var_dump($obj->searchKey('王八'));
+```
+
+## DFA 类
 ```
 class DFA
 {
     private $arrHashMap = [];
 
-    public function putHashMap() {
+    public function getHashMap() {
         print_r($this->arrHashMap);
     }
 
