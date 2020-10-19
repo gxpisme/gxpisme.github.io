@@ -53,5 +53,46 @@ function quickSort($arr) {
 ![](/image/algorithm-quicksort.gif)
 
 ## 归并排序
-```
+```php
+
+function mergeSortMain($arr) {
+    $len = count($arr);
+    if ($len <= 1) {
+        return $arr;
+    }
+
+
+    $middle = floor($len / 2);
+
+    $left = array_slice($arr, 0, $middle);
+    $right = array_slice($arr, $middle);
+    $left = mergeSortMain($left);
+    $right = mergeSortMain($right);
+
+    return mergeSort($left, $right);
+}
+
+
+function mergeSort($one, $two) {
+    $oneLength = count($one);
+    $twoLength = count($two);
+    $oneI = 0;
+    $twoI = 0;
+
+    $tmp = [];
+    while ($oneI < $oneLength && $twoI < $twoLength) {
+        $tmp[] = $one[$oneI] > $two[$twoI] ? $one[$oneI++] : $two[$twoI++];
+    }
+
+    while ($oneI < $oneLength) {
+        $tmp[] = $one[$oneI++];
+    }
+
+    while ($twoI < $twoLength) {
+        $tmp[] = $two[$twoI++];
+    }
+
+    return $tmp;
+}
+
 ```
