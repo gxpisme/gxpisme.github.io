@@ -1,4 +1,4 @@
-# 敏感词树 DFA
+# 敏感词树 DFA(Deterministic Finite Automaton)
 
 
 ## 构建敏感词树
