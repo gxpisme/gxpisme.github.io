@@ -128,4 +128,26 @@ function selectionSort($arr) {
 
 ## 插入排序
 ```php
+
+function insertionSort($arr) {
+    $len = count($arr);
+    if ($arr <= 1) {
+        return $arr;
+    }
+
+    for ($i = 1; $i < $len; $i++) {
+        $t = $arr[$i];
+        $j = $i - 1;
+
+        while ($arr[$j] < $t) {
+            $arr[$j+1] = $arr[$j];
+            $arr[$j] = $t;
+            if ($j-- <= 0) {
+                break;
+            }
+        }
+    }
+
+    return $arr;
+}
 ```
