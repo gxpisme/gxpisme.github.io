@@ -127,6 +127,9 @@ function selectionSort($arr) {
 ```
 
 ## 插入排序
+
+![](/image/algothrim-insertionsort.gif)
+
 ```php
 
 function insertionSort($arr) {
