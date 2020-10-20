@@ -29,6 +29,41 @@ function binarySearch($arr, $key) {
 
 ## 单链表
 ### 单链表翻转
+```
+    // 通过迭代来翻转单链表
+    public static Node reverseNodeByIteration(Node head) {
+        Node pre = null;
+        Node next = null;
+
+        while (head != null) {
+            next = head.getNext();
+
+            head.setNext(pre);
+            pre = head;
+
+            head = next;
+        }
+
+        return pre;
+    }
+
+    // 通过递归翻转单链表
+    public static Node reverseNodeByRecursive(Node head) {
+        if (head == null || head.getNext() == null) {
+            return head;
+        }
+        Node newHead = reverseNodeByRecursive(head.getNext());
+
+        Node temp = head.getNext();
+        temp.setNext(head);
+
+        head.setNext(null);
+        return newHead;
+    }
+```
+
+参考文档：[](https://www.cnblogs.com/keeya/p/9218352.html)
+
 ### 单链表是否有环
 
 ## 树
