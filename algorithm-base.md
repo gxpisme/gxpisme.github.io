@@ -29,7 +29,7 @@ function binarySearch($arr, $key) {
 
 ## 单链表
 ### 单链表翻转
-```
+```java
     // 通过迭代来翻转单链表
     public static Node reverseNodeByIteration(Node head) {
         Node pre = null;
@@ -66,6 +66,25 @@ function binarySearch($arr, $key) {
 - [理解单链表的反转(java实现)](https://www.cnblogs.com/keeya/p/9218352.html)
 
 ### 单链表是否有环
+```java
+    public static boolean isLoop(Node head) {
+        if (head == null && head.getNext() == null) {
+            return false;
+        }
+
+        Node fast = head;
+        Node slow = head;
+        while (slow != null && fast != null) {
+            slow = slow.getNext();
+            fast = fast.getNext().getNext();
+            if (slow.equals(fast)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+```
 
 ## 树
 ### 广度优先遍历
