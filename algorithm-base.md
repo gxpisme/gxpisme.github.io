@@ -62,7 +62,8 @@ function binarySearch($arr, $key) {
     }
 ```
 
-参考文档：[](https://www.cnblogs.com/keeya/p/9218352.html)
+参考文档
+- [理解单链表的反转(java实现)](https://www.cnblogs.com/keeya/p/9218352.html)
 
 ### 单链表是否有环
 
