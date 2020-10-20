@@ -49,15 +49,23 @@ function binarySearch($arr, $key) {
 
     // 通过递归翻转单链表
     public static Node reverseNodeByRecursive(Node head) {
+        // 如果head为null，或者head没有下一个元素，则返回该值。 这是递归第一次出栈
         if (head == null || head.getNext() == null) {
             return head;
         }
         Node newHead = reverseNodeByRecursive(head.getNext());
 
-        Node temp = head.getNext();
-        temp.setNext(head);
+        // D -> E -> F
 
+        // 这里第一次执行， head = (E -> F)   newHead = F
+        Node t = head.getNext();
+        // 此时 t = F
+        // F -> (E -> F)
+        t.setNext(head);
+        // (E -> F)  --> E
         head.setNext(null);
+
+        // newHead 只返回头的位置
         return newHead;
     }
 ```
