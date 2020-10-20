@@ -1,5 +1,6 @@
-# 二分查找法
+# 基础的算法
 
+## 二分查找法
 ```php
 function binarySearch($arr, $key) {
     $len = count($arr);
