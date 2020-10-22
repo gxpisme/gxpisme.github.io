@@ -98,6 +98,7 @@ function binarySearch($arr, $key) {
 ### 广度优先遍历
 ### 深度优先遍历
 ```
+    // 递归深度优先遍历
     private static void depth(TreeNode root) {
         if (root != null) {
             System.out.println(root.getValue());
