@@ -109,6 +109,19 @@ MySQL5.1之后才开始有的
 - 有很多库，那就可以每个库都可以开一个线程，这就加快速度了。 因为事务一般都是数据库级别的。
 - 若是单库多表的情况呢？将主库上同时并行执行的事务，分为一组，编一个号，这些事务在从库上的回放可以并行执行（事务在主库上的执行都进入到prepare阶段，说明事务之间没有冲突，否则就不可能提交）
 
+# 全同步&半同步&异步
+> 这里简单来说下这三个的区别。
+> 主要根据这个图，进行阐述。
+
+![](image/mysql-replication.jpg)
+
+- 主线程binlog dump出后，slave将binlog写入到relaylog中，relaylog重放到数据库中，通知会主线程。（全同步）
+- 主线程binlog dump出后，slave将binlog写入到relaylog中后，通知到主线程。（半同步）
+- 主线程binlog dump出后不管了。（异步）
+
+
+
+
 # 参考资料
 - [better-parallel-replication-for-mysql](https://medium.com/booking-com-infrastructure/better-parallel-replication-for-mysql-14e2d7857813)
 - [MySQL主从延迟长，如何优化](https://mp.weixin.qq.com/s/pP2f7CYbT7ftM0tvk9c4mQ)
