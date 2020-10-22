@@ -96,6 +96,25 @@ function binarySearch($arr, $key) {
 
 ## 树
 ### 广度优先遍历
+```
+// 用队列，通过入队列，出队列， 出队列拿到值，在获取left和right，将left和right入到队列中
+    private static void breadth(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.offer(root);
+
+        while(queue.size() > 0) {
+            TreeNode poll = queue.poll();
+            if (poll != null) {
+                System.out.println(poll.getValue());
+                queue.offer(poll.getLeft());
+                queue.offer(poll.getRight());
+            }
+        }
+    }
+```
 ### 深度优先遍历
 ```
     // 递归深度优先遍历
