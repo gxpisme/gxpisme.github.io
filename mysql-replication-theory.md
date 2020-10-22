@@ -115,11 +115,9 @@ MySQL5.1之后才开始有的
 
 ![](image/mysql-replication.jpg)
 
-- 主线程binlog dump出后，slave将binlog写入到relaylog中，relaylog重放到数据库中，通知会主线程。（全同步）
-- 主线程binlog dump出后，slave将binlog写入到relaylog中后，通知到主线程。（半同步）
-- 主线程binlog dump出后不管了。（异步）
-
-
+- master binlog dump出后，slave将binlog写入到relaylog中，relaylog重放到数据库中，通知到master。（全同步）
+- master binlog dump出后，slave将binlog写入到relaylog中后，通知到master。（半同步）
+- master binlog dump出后不管了。（异步）
 
 
 # 参考资料
