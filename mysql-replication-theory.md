@@ -104,9 +104,11 @@ MySQL5.1之后才开始有的
 > slave 一个 存放relay log线程
 > slave 另一个 relay log 重放到数据库表线程
 
-从这三个线程着手，最好实现的是重放线程(relay)。有很多库，那就可以每个库都可以开一个线程，这就加快速度了。
+从这三个线程着手，最好实现的是重放线程(relay)。
 
+- 有很多库，那就可以每个库都可以开一个线程，这就加快速度了。 因为事务一般都是数据库级别的。
+- 若是单库多表的情况呢？
 
+# 参考资料
 - [better-parallel-replication-for-mysql](https://medium.com/booking-com-infrastructure/better-parallel-replication-for-mysql-14e2d7857813)
 - [MySQL主从延迟长，如何优化](https://mp.weixin.qq.com/s/pP2f7CYbT7ftM0tvk9c4mQ)
-
