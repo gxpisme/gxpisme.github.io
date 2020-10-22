@@ -97,4 +97,13 @@ function binarySearch($arr, $key) {
 ## 树
 ### 广度优先遍历
 ### 深度优先遍历
+```
+    private static void depth(TreeNode root) {
+        if (root != null) {
+            System.out.println(root.getValue());
+            depth(root.getLeft());
+            depth(root.getRight());
+        }
+    }
+```
 
