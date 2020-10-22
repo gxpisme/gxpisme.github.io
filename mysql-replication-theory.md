@@ -119,6 +119,8 @@ MySQL5.1之后才开始有的
 - master binlog dump出后，slave将binlog写入到relaylog中后，通知到master。（半同步）
 - master binlog dump出后不管了。（异步）
 
+`MySQL replication by default is asynchronous` 
+https://dev.mysql.com/doc/refman/5.7/en/replication-semisync.html#:~:text=MySQL%20replication%20by%20default%20is,will%20ever%20reach%20any%20replica.
 
 # 参考资料
 - [better-parallel-replication-for-mysql](https://medium.com/booking-com-infrastructure/better-parallel-replication-for-mysql-14e2d7857813)
