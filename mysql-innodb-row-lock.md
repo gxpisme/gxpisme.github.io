@@ -1,11 +1,5 @@
----
-title: InnoDB的行锁
-date: 2018-01-15 12:16:42
-tags:
-    - InnoDB
-categories: 数据库
----
-<!-- more -->
+# InnoDB的行锁
+
 行锁的三种算法
 ===
     - Record Lock  单个记录上的锁
