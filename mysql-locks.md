@@ -13,3 +13,7 @@
 ## 插入意向锁（Insert Intention Locks）
 
 ## 自增锁（AUTO-INC Locks）
+
+
+## 参考资料
+[MySQL官网](https://dev.mysql.com/doc/refman/5.7/en/innodb-locking.html)
