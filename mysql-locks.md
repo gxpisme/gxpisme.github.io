@@ -3,6 +3,7 @@
 ## 共享锁和排他锁（Shared and Exclusive Locks）
 
 共享锁：保证事务可以读取一行数据
+
 共享锁：保障事务可以更新或删除一行数据
 
 ## 意向锁（Intention Locks）
