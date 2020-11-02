@@ -1,10 +1,4 @@
----
-title: JAVA锁-ReenrantLock
-date: 2020-06-30 20:26:03
-tags:
-    - java
-categories: java
----
+# JAVA锁-ReenrantLock
 
 ## 背景
 > Synchronized 是一种内置锁，容易使用，但是不容易操作。
@@ -103,7 +97,7 @@ public ReentrantLock() {
 ```
 
 
-### 公平锁
+### 非公平锁
 ```
     /**
      * Sync object for non-fair locks
