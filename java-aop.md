@@ -1,11 +1,5 @@
----
-title: JAVA 切面 AOP(Aspect Oriented Programming)
-date: 2019-10-23 14:40:10
-tags:
-    - java
-categories: java
----
-<!-- more -->
+# JAVA 切面 AOP(Aspect Oriented Programming)
+
 > AOP (Aspect Oriented Programming) 面向切面编程。
 
 > 感觉名字吊的不行，其实也就那样。
@@ -191,14 +185,14 @@ public class ServiceAspect {
 
 - 自己试一下这些代码，对理解起来非常有帮助
 
-**其实这个代码是有问题的？如果有返回值呢，咋办？**
+**其实这个代码是有问题的？如果有返回值呢，咋办呢？记录返回值，然后返回**
 
 ```java
     @Around("execution(public void LoginService.login(String))")
-    public void round(ProceedingJoinPoint point) throws Throwable{
+    public Object round(ProceedingJoinPoint point) throws Throwable{
         Object result = null;
         System.out.println("@Around 环绕开始");
-        point.proceed(); //执行目标方法
+	result = point.proceed(); //执行目标方法
         System.out.println("@Around 环绕结束");
         return result;
     }
