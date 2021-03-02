@@ -137,18 +137,18 @@ if (离用户最远.loadClass) {
 
 ```java
     protected Class<?> loadClass(String name, boolean resolve) {
-			// 首先，检查类是被加载
+            // 首先，检查类是被加载
             Class<?> c = findLoadedClass(name);
             if (c == null) {
                 // 看下该父类是否为null，不为null，则用父类进行加载
-				if (parent != null) {
+                if (parent != null) {
                     // 这里是递归的。
                     // 顺序 Bootstrap -> Ext -> App -> Custom
-					c = parent.loadClass(name, false);
-				} else {
+		    c = parent.loadClass(name, false);
+                } else {
                     // 父类为null，就是C++编写的类加载了。
-					c = findBootstrapClassOrNull(name);
-				}
+                    c = findBootstrapClassOrNull(name);
+                }
 
                 if (c == null) {
                     // 如果仍然没有找到，则调用findClass去查找类并加载
