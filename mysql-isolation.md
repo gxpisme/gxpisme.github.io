@@ -1,7 +1,7 @@
 > 之前只是模糊的知道，事务隔离级别有四个，默认的是REPEATABLE READ.
-> 
+>
 > 今天在观察线上DB配置的时候，发现配置的是READ COMMITTED。于是找DBA确认，其他线上都是这么配置的吗？DBA确认线上是这个READ COMMITTED隔离级别，并表示这种情况已经足够用。
->  
+>
 > 脏读 dirty read、幻读 phantom read、不可重复读 Non-Repeatable Read 三者如何定义、什么区别？
 >
 > 之前面试别人的时候，也经常问这个知识点，但是自己也不太清晰，趁此机会，补下这个知识点。
@@ -82,7 +82,7 @@ INSERT INTO t VALUES (1,2),(2,2);
 
 
 ```
-表 和 数据 
+表 和 数据
 
 CREATE TABLE `t` (
   `a` int(11) NOT NULL,
@@ -101,7 +101,7 @@ INSERT INTO t VALUES (1,2),(2,2);
 2 |     | start transaction   |
 3 |  UPDATE t SET b = 3 where a = 1;   |    |
 4 |     |  update t set b = 4 where a = 2;  无阻塞，直接成功 |
-5 |  select b from t where a = 2; **这里查出的b值是 2**   |   
+5 |  select b from t where a = 2; **这里查出的b值是 2**   |
 6 |     |  commit   |
 7 |  select b from t where a = 2; **这里查出的b值是 4**   |     |
 8 |  commit   |     |
@@ -116,7 +116,7 @@ INSERT INTO t VALUES (1,2),(2,2);
 2 |     | start transaction   |
 3 |  UPDATE t SET b = 3 where a = 1;   |    |
 4 |     |  update t set b = 4 where a = 2;  无阻塞，直接成功 |
-5 |  select b from t where a = 2; **事务B未提交，这里查出的b值是 4**   |   
+5 |  select b from t where a = 2; **事务B未提交，这里查出的b值是 4**   |
 6 |     |  commit   |
 7 |  commit   |     |
 
@@ -153,7 +153,7 @@ INSERT INTO t VALUES (1,2),(2,2);
 
 ![](https://i.stack.imgur.com/aCtew.png)
 
-### 不可重复读 Non-Repeatable Read 
+### 不可重复读 Non-Repeatable Read
 同一个事务内，两次多取同行数据，发现数据不一致，重点是同样的行，返回的行数不变。
 
 会发生的隔离级别`READ UNCOMMITTED`和`READ COMMITTED`。

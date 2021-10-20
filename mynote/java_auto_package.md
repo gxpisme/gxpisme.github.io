@@ -209,4 +209,4 @@ public class Main {
 }
 ```
 
-<br />![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634717532137-9a6c7320-9a97-4e8a-b266-1b0e7919d89d.png#clientId=u571f5226-7e91-4&from=paste&height=230&id=ua825a87a&margin=%5Bobject%20Object%5D&name=image.png&originHeight=256&originWidth=423&originalType=binary&ratio=1&size=95573&status=done&style=none&taskId=u49757b6f-8969-45c0-9118-65e16f3f973&width=379.5)<br />Integer如果在 -128到127之间，可以直接使用内存中的数据。<br />变量 a b 指向的都是同一个地址。<br />变量 c d 指向不同的地址。
+<br />![image.png](/image/mynote/java_auto_package_image.png)<br />Integer如果在 -128到127之间，可以直接使用内存中的数据。<br />变量 a b 指向的都是同一个地址。<br />变量 c d 指向不同的地址。
