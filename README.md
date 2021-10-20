@@ -28,7 +28,7 @@
 
 ```
 
-<img style=" width: 60%; " src="/image/knowledge.png" />
+<img style=" width: 60%; " src="https://gxpisme.github.io/image/knowledge.png" />
 
 
 ## 架构
