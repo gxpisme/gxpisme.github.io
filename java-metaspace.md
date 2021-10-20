@@ -9,7 +9,7 @@
 ### 分配metaspace空间
 ![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1632296255350-b6beb0f7-3f3d-4802-b6bb-246a6ff17144.png#clientId=ucef1c819-9448-4&from=paste&height=364&id=u432f6b59&margin=%5Bobject%20Object%5D&name=image.png&originHeight=728&originWidth=1768&originalType=binary&ratio=1&size=174469&status=done&style=none&taskId=ua3659a7e-9640-44d6-89cc-8e723f0c6db&width=884)
 ### 回收metaspace空间
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1632296298039-2cd49dca-d902-41f4-a6cb-87322ebebb96.png#clientId=ucef1c819-9448-4&from=paste&height=465&id=u2dfab26f&margin=%5Bobject%20Object%5D&name=image.png&originHeight=930&originWidth=1882&originalType=binary&ratio=1&size=351427&status=done&style=none&taskId=u28e984dc-5e9b-4764-943b-13b85eabb3a&width=941)<br />
+![](https://cdn.nlark.com/yuque/0/2021/png/546024/1632296298039-2cd49dca-d902-41f4-a6cb-87322ebebb96.png#clientId=ucef1c819-9448-4&from=paste&height=465&id=u2dfab26f&margin=%5Bobject%20Object%5D&name=image.png&originHeight=930&originWidth=1882&originalType=binary&ratio=1&size=351427&status=done&style=none&taskId=u28e984dc-5e9b-4764-943b-13b85eabb3a&width=941)<br />
 
 ### metaspace与GC
 
