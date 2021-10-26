@@ -1,35 +1,54 @@
-```java
--XX:MetaspaceSize=512m
--XX:MaxMetaspaceSize=512m Metaspace 总空间的最大允许使用内存，默认是不限制。
--XX:CompressedClassSpaceSize=1G Metaspace 中的 Compressed Class Space 的最大允许内存，默认值是 1G，这部分会在 JVM 启动的时候向操作系统申请 1G 的虚拟地址映射，但不是真的就用了操作系统的 1G 内存。
-```
+# MetaSpace是什么？
+MetaSpace 是JDK1.8之后才有的，称为元数据空间，存放类的元数据 class metadata。
 
 <br />
 
-### 分配metaspace空间
-![](https://cdn.nlark.com/yuque/0/2021/png/546024/1632296255350-b6beb0f7-3f3d-4802-b6bb-246a6ff17144.png#clientId=ucef1c819-9448-4&from=paste&height=364&id=u432f6b59&margin=%5Bobject%20Object%5D&name=image.png&originHeight=728&originWidth=1768&originalType=binary&ratio=1&size=174469&status=done&style=none&taskId=ua3659a7e-9640-44d6-89cc-8e723f0c6db&width=884)
-### 回收metaspace空间
-![](https://cdn.nlark.com/yuque/0/2021/png/546024/1632296298039-2cd49dca-d902-41f4-a6cb-87322ebebb96.png#clientId=ucef1c819-9448-4&from=paste&height=465&id=u2dfab26f&margin=%5Bobject%20Object%5D&name=image.png&originHeight=930&originWidth=1882&originalType=binary&ratio=1&size=351427&status=done&style=none&taskId=u28e984dc-5e9b-4764-943b-13b85eabb3a&width=941)<br />
+我是这样理解的，比如有一个狗的模具（类），通过狗模具（类）印出来的狗（实例）会有很多，这些狗（实例）存在了Heap里，也就是堆中。而这个狗模具（类）存放到那了呢？存放到了MetaSpace空间中。
 
-### metaspace与GC
+- 狗模具(类) 存放在 MetaSpace中
+- 印出来的狗（实例） 存放在 Heap中
 
-- 分配空间时
-   - 虚拟机维护了一个阈值，如果 Metaspace 的空间大小超过了这个阈值，那么在新的空间分配申请时，虚拟机首先会通过收集可以卸载的类加载器来达到复用空间的目的，而不是扩大 Metaspace 的空间，这个时候会触发 GC。这个阈值会上下调整，和 Metaspace 已经占用的操作系统内存保持一个距离。
-- 碰到 Metaspace OOM
-   - Metaspace 的总使用空间达到了 MaxMetaspaceSize 设置的阈值，或者 Compressed Class Space 被使用光了，如果这次 GC 真的通过卸载类加载器腾出了很多的空间，这很好，否则的话，我们会进入一个糟糕的 GC 周期，即使我们有足够的堆内存。​
+![](https://cdn.nlark.com/yuque/0/2021/png/546024/1634736490324-3c17e55d-f6c8-42f6-b516-abc38f1f51f3.png#clientId=ud18f3b09-7ef9-4&from=paste&id=ufb082c20&margin=%5Bobject%20Object%5D&originHeight=500&originWidth=500&originalType=url&ratio=1&status=done&style=none&taskId=u3059ef1d-7d03-4550-9884-9a914556915)
 
+<br />
 
+在Java中 everthing is object 所有东西都是对象。对应到咱们写的代码上，一个类的相关信息都存放在了MetaSpace空间中，类的相关信息：属性字段、方法参数、常量池、接口等等。
+
+# MetaSpace如何管理空间
+## MetaSpace 空间大小
+Metaspace 区域位于堆外，所以它的最大内存大小取决于系统内存，而不是堆大小，我们可以指定 MaxMetaspaceSize 参数来限定它的最大内存，若不指定MaxMetaspaceSize参数最大内存就是系统内存。
+<br />
+
+> -XX:MetaspaceSize=512m<br />-XX:MaxMetaspaceSize=512m Metaspace总空间的最大允许使用内存，默认是不限制。<br />-XX:CompressedClassSpaceSize=1G Metaspace 中的 Compressed Class Space 的最大允许内存，默认值是 1G，这部分会在 JVM 启动的时候向操作系统申请 1G 的虚拟地址映射，但不是真的就用了操作系统的 1G 内存。
+
+## 分配Metaspace空间
+通俗来讲：就是加载类时，需要将类的元数据往_Metaspace_空间存一份。
+当加载类的时候，类加载器会负责将类的元数据信息存放到Metaspace空间中，将类实例存放到Heap中。
+
+如下图：类加载器Id，加载了类X，类X生成了两个实例，但是类X的元数据只有一份，因此Metaspace空间只有一份类X的元数据。<br />类加载器Id，加载了类Y，类Y生成了一个实例，Metaspace空间有一份类Y的元数据。<br />![](https://cdn.nlark.com/yuque/0/2021/png/546024/1634736423043-235806ac-18ce-4c15-b9e2-7c1027cc9434.png#clientId=u6ea669a3-aa5c-4&from=paste&id=ud08e9838&margin=%5Bobject%20Object%5D&originHeight=374&originWidth=779&originalType=url&ratio=1&status=done&style=none&taskId=ua2c3c170-8bac-4464-bfa6-791db884685)
+## 回收metaspace空间
+分配给类的空间，这个空间是归属于这个该类的类加载器，只有当这个类加载器卸载的时候，这个空间才会被释放。
+
+通俗来讲：一个类加载器的所有类，均不再引用时，类加载器也卸载的时候，空间才会释放。
+
+如下图<br />阶段一：类Y的实例c，不再引用了。实例c还在Heap 堆中。<br />阶段二：类X的实例a b，也不再引用了。实例a b还在Heap堆中。<br />阶段三：GC（垃圾回收）开始执行，实例a b c都被回收。<br />阶段四：类加载器Id加载的所有类都被回收，类加载器对应的Metaspace空间也被回收掉。<br />![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634736524714-d73709d3-7b97-49dc-b4ad-37cccaff4a51.png#clientId=ud18f3b09-7ef9-4&from=paste&height=267&id=ue81288fe&margin=%5Bobject%20Object%5D&name=image.png&originHeight=534&originWidth=1080&originalType=binary&ratio=1&size=143131&status=done&style=none&taskId=u2ca97b82-2401-490a-bf3c-6c85c3f92c4&width=540)
+# ​<br />
 
 ## 内存分配
 ### VirtualSpaceList
-一个 Node 是 2MB 的空间，这里的 2MB 不是真的就消耗了主存的 2MB，只有之后在使用的时候才会真的消耗内存。这里是虚拟内存映射。<br />
-<br />![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1632296792574-5d1d31c9-bb82-42e4-9186-0e292969ec8d.png#clientId=u6825509a-c1b7-4&from=paste&height=577&id=u038cc23b&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1154&originWidth=2080&originalType=binary&ratio=1&size=129896&status=done&style=none&taskId=u4c9ea597-e7cb-40e3-9eeb-43c5aef1504&width=1040)
+一个 Node 是 2MB 的空间，这里的 2MB 不是真的就消耗了内存的 2MB，只有在使用的时候才会真的消耗内存。这里是虚拟内存映射。
+
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1632296792574-5d1d31c9-bb82-42e4-9186-0e292969ec8d.png#clientId=u6825509a-c1b7-4&from=paste&height=577&id=u038cc23b&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1154&originWidth=2080&originalType=binary&ratio=1&size=129896&status=done&style=none&taskId=u4c9ea597-e7cb-40e3-9eeb-43c5aef1504&width=1040)
+
 ### Chunk
-从一个 Node 中分配内存，每一块称为 MetaChunk，chunk 有三种规格，在 64 位系统中分别为 1K、4K、64K。<br />![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1632296913208-61720658-786d-4824-bfce-5c074d37ca9e.png#clientId=u6825509a-c1b7-4&from=paste&height=247&id=ub57aaae1&margin=%5Bobject%20Object%5D&name=image.png&originHeight=494&originWidth=2186&originalType=binary&ratio=1&size=50460&status=done&style=none&taskId=uf82936d1-627e-430e-8a5f-c6302927d5d&width=1093)<br />
+从一个 Node 中分配内存，每一块称为 MetaChunk，chunk 有三种规格，在 64 位系统中分别为 1K、4K、64K。
+
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1632296913208-61720658-786d-4824-bfce-5c074d37ca9e.png#clientId=u6825509a-c1b7-4&from=paste&height=247&id=ub57aaae1&margin=%5Bobject%20Object%5D&name=image.png&originHeight=494&originWidth=2186&originalType=binary&ratio=1&size=50460&status=done&style=none&taskId=uf82936d1-627e-430e-8a5f-c6302927d5d&width=1093)<br />
 
 - 通常，一个标准的类加载器在第一次申请空间时，会得到一个 4K 的 chunk，直到它达到了一个随意设置的阈值，此时分配器失去了耐心，之后会一次性给它一个 64K 的大 chunk。
 - bootstrap classloader 是一个公认的会加载大量的类的加载器，所以分配器会给它一个巨大的 chunk，一开始就会给它 4M。可以通过 InitialBootClassLoaderMetaspaceSize 进行调优。
 - 反射类类加载器 (jdk.internal.reflect.DelegatingClassLoader) 和匿名类类加载器只会加载一个类，所以一开始只会给它们一个非常小的 chunk（1K），因为给它们太多就是一种浪费。
+
 ### Block
 在 Metachunk 上，我们有一个二级分配器（class-loader-local allocator），它将一个 Metachunk 分割成一个个小的单元，这些小的单元称为 Metablock，它们是实际分配给每个调用者的。<br />![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1632297016413-69e5d847-86b4-4487-bd12-e6e6d4e838c8.png#clientId=u6825509a-c1b7-4&from=paste&height=467&id=u22ba32fd&margin=%5Bobject%20Object%5D&name=image.png&originHeight=934&originWidth=1972&originalType=binary&ratio=1&size=100160&status=done&style=none&taskId=u47d40f58-c69b-46ec-95ae-5d38ed5b1be&width=986)<br />
 
@@ -37,7 +56,6 @@
 # MetaSpace 架构
 > 深入到MetaSpace架构中，看看他们多层，多组件是如何组织协作的。
 
-​
 
 Metaspace分了三个层，最底层，中间层，最上层。<br />最底层：直接从操作系统中申请大块内存。<br />中间层：将内存块划分为小块Chunk给类加载器使用。<br />最上层：类加载器分开的Chunk，给调用代码使用。
 ## 最底层 VirtualSpaceList
@@ -48,12 +66,23 @@ Metaspace分了三个层，最底层，中间层，最上层。<br />最底层�
 
 一个 Node 是 2MB 的空间，前面说了在使用的时候再向操作系统申请实际的内存，但是频繁的系统调用会降低性能，所以 Node 内部需要维护一个水位线，当 Node 内已使用内存快达到水位线的时候，向操作系统要新的内存页。并且相应地提高水位线。
 
-直到一个 Node 被完全用完，会分配一个新的 Node，并且将新的Node加入到链表中，老的 Node 就 “退休” 了。下图中，前面的三个 Node 就是退休状态了。退休节点的剩余空间不会丢失，而是被分割成块并添加到全局自由列表中。<br />
-<br />从一个 Node 中分配内存，每一块称为 MetaChunk，chunk 有三种规格，在 64 位系统中分别为 1K、4K、64K。<br />
-<br />![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1632296792574-5d1d31c9-bb82-42e4-9186-0e292969ec8d.png#clientId=u6825509a-c1b7-4&from=paste&height=577&id=u038cc23b&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1154&originWidth=2080&originalType=binary&ratio=1&size=129896&status=done&style=none&taskId=u4c9ea597-e7cb-40e3-9eeb-43c5aef1504&width=1040)<br />VirtualSpaceList 和它的Node节点是全局的结构，Metachunk归属于类加载器。因此在VirtualSpaceList中的Node节点经常会有不同的类加载器。如下图：一个Node中就有a、b、c、d四个类加载器。![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1632296913208-61720658-786d-4824-bfce-5c074d37ca9e.png#clientId=u6825509a-c1b7-4&from=paste&height=247&id=ub57aaae1&margin=%5Bobject%20Object%5D&name=image.png&originHeight=494&originWidth=2186&originalType=binary&ratio=1&size=50460&status=done&style=none&taskId=uf82936d1-627e-430e-8a5f-c6302927d5d&width=1093)<br />
-<br />当一个类加载器它所有的类都被卸载后，被卸载的类加载器所对应的元数据信息被释放。所有空闲的chunk被添加到一个全局空闲列表中([ChunkManager](http://hg.openjdk.java.net/jdk/jdk11/file/1ddf9a99e4ad/src/hotspot/share/memory/metaspace/chunkManager.hpp#l44))<br />​
+直到一个 Node 被完全用完，会分配一个新的 Node，并且将新的Node加入到链表中，老的 Node 就 “退休” 了。下图中，前面的三个 Node 就是退休状态了。退休节点的剩余空间不会丢失，而是被分割成块并添加到全局自由列表中。
+<br />
+<br />
 
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634808493712-1f846986-5c7f-4ad2-8617-a2a0e0e77990.png#clientId=u0b635656-98b2-4&from=paste&height=307&id=u24df8780&margin=%5Bobject%20Object%5D&name=image.png&originHeight=410&originWidth=667&originalType=binary&ratio=1&size=23092&status=done&style=none&taskId=u06cac263-cdff-4637-ad71-7dea52fa139&width=500)<br />如果其他类加载器开始加载类，在申请Metaspace空间的时候，会用之前的空闲空间。<br />上图类加载器b对应的空间被释放，下图类加载器e和类加载器f就会使用类加载器b所释放的空间。<br />​
+从一个 Node 中分配内存，每一块称为 MetaChunk，chunk 有三种规格，在 64 位系统中分别为 1K、4K、64K。
+
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1632296792574-5d1d31c9-bb82-42e4-9186-0e292969ec8d.png#clientId=u6825509a-c1b7-4&from=paste&height=577&id=u038cc23b&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1154&originWidth=2080&originalType=binary&ratio=1&size=129896&status=done&style=none&taskId=u4c9ea597-e7cb-40e3-9eeb-43c5aef1504&width=1040)
+
+VirtualSpaceList 和它的Node节点是全局的结构，Metachunk归属于类加载器。因此在VirtualSpaceList中的Node节点经常会有不同的类加载器。如下图：一个Node中就有a、b、c、d四个类加载器。
+
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1632296913208-61720658-786d-4824-bfce-5c074d37ca9e.png#clientId=u6825509a-c1b7-4&from=paste&height=247&id=ub57aaae1&margin=%5Bobject%20Object%5D&name=image.png&originHeight=494&originWidth=2186&originalType=binary&ratio=1&size=50460&status=done&style=none&taskId=uf82936d1-627e-430e-8a5f-c6302927d5d&width=1093)
+
+当一个类加载器它所有的类都被卸载后，被卸载的类加载器所对应的元数据信息被释放。所有空闲的chunk被添加到一个全局空闲列表中([ChunkManager](http://hg.openjdk.java.net/jdk/jdk11/file/1ddf9a99e4ad/src/hotspot/share/memory/metaspace/chunkManager.hpp#l44))<br />​
+
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634808493712-1f846986-5c7f-4ad2-8617-a2a0e0e77990.png#clientId=u0b635656-98b2-4&from=paste&height=307&id=u24df8780&margin=%5Bobject%20Object%5D&name=image.png&originHeight=410&originWidth=667&originalType=binary&ratio=1&size=23092&status=done&style=none&taskId=u06cac263-cdff-4637-ad71-7dea52fa139&width=500)
+
+如果其他类加载器开始加载类，在申请Metaspace空间的时候，会用之前的空闲空间。上图类加载器b对应的空间被释放，下图类加载器e和类加载器f就会使用类加载器b所释放的空间。
 
 ![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634808688137-9494b6ab-e79f-4d25-a728-f8f2a2156819.png#clientId=u0b635656-98b2-4&from=paste&height=295&id=uc67c5330&margin=%5Bobject%20Object%5D&name=image.png&originHeight=394&originWidth=667&originalType=binary&ratio=1&size=20968&status=done&style=none&taskId=ube5e5ff6-b995-4049-9714-f970ace74fb&width=500)
 
@@ -78,8 +107,8 @@ Metaspace内存分配给类加载器多大的内存呢？
 
 ​
 
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1632297016413-69e5d847-86b4-4487-bd12-e6e6d4e838c8.png#clientId=u6825509a-c1b7-4&from=paste&height=467&id=u22ba32fd&margin=%5Bobject%20Object%5D&name=image.png&originHeight=934&originWidth=1972&originalType=binary&ratio=1&size=100160&status=done&style=none&taskId=u47d40f58-c69b-46ec-95ae-5d38ed5b1be&width=986)<br />
-<br />这个 chunk 诞生的时候，它只包含header，之后的分配都只要在顶部进行分配就行。<br />​
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1632297016413-69e5d847-86b4-4487-bd12-e6e6d4e838c8.png#clientId=u6825509a-c1b7-4&from=paste&height=467&id=u22ba32fd&margin=%5Bobject%20Object%5D&name=image.png&originHeight=934&originWidth=1972&originalType=binary&ratio=1&size=100160&status=done&style=none&taskId=u47d40f58-c69b-46ec-95ae-5d38ed5b1be&width=986)
+这个 chunk 诞生的时候，它只包含header，之后的分配都只要在顶部进行分配就行。<br />​
 
 由于这个 chunk 是归属于一个类加载器的，所以如果它不再加载新的类，那么 unused 空间就将真的浪费掉。
 
@@ -87,9 +116,13 @@ Metaspace内存分配给类加载器多大的内存呢？
 在 JVM 内部，类加载器是以 [ClassLoaderData](http://hg.openjdk.java.net/jdk/jdk11/file/1ddf9a99e4ad/src/hotspot/share/classfile/classLoaderData.hpp#l176) 结构标识的，这个结构引用了一个 [ClassLoaderMetaspace](http://hg.openjdk.java.net/jdk/jdk11/file/1ddf9a99e4ad/src/hotspot/share/memory/metaspace.hpp#l230)结构，它维护了该加载器使用的所有的 Metachunk。<br />​
 
 当这个类加载器被卸载的时候，这个 ClassLoaderData 和 ClassLoaderMetaspace 会被删除。并且会将所有的这个加载器用到的 chunks 归还到空闲列表中。如果恰好把整个 Node 都清空了，那么这个 Node 的内存直接还给操作系统。
+
 # 内存什么时候会还给操作系统
-当一个 VirtualSpaceListNode 中的所有 chunk 都是空闲的时候，这个 Node 就会从链表 VirtualSpaceList 中移除，它的 chunks 也会从空闲列表中移除，这个 Node 就没有被使用了，会将其内存归还给操作系统。<br />
-<br />对于一个空闲的 Node 来说，拥有其上面的 chunks 的所有的类加载器必然都是被卸载了的。<br />至于这个情况是否可能发生，主要就是取决于碎片化：<br />一个 Node 是 2M，chunks 的大小为 1K, 4K 或 64K，所以通常一个 Node 上有约 150-200 个 chunks，如果这些 chunks 全部由同一个类加载器拥有，回收这个类加载器就可以一次性回收这个 Node，并且把它的空间还给操作系统。<br />​
+当一个 VirtualSpaceListNode 中的所有 chunk 都是空闲的时候，这个 Node 就会从链表 VirtualSpaceList 中移除，它的 chunks 也会从空闲列表中移除，这个 Node 就没有被使用了，会将其内存归还给操作系统。
+
+对于一个空闲的 Node 来说，拥有其上面的 chunks 的所有的类加载器必然都是被卸载了的。
+至于这个情况是否可能发生，主要就是取决于碎片化：
+一个 Node 是 2M，chunks 的大小为 1K, 4K 或 64K，所以通常一个 Node 上有约 150-200 个 chunks，如果这些 chunks 全部由同一个类加载器拥有，回收这个类加载器就可以一次性回收这个 Node，并且把它的空间还给操作系统。
 
 但是，如果这些 chunks 分配给不同的类加载器，每个类加载器都有不同的生命周期，那么什么都不会被释放。这也许就是在告诉我们，要小心对待大量的小的类加载器，如那些负责加载匿名类或反射类的加载器。
 
@@ -108,24 +141,46 @@ Metaspace内存分配给类加载器多大的内存呢？
 > 实例对象包含三部分：对象头、实例变量、填充数据。
 > 对象头存储了到对象类型数据的指针。
 
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634898917826-09f8102e-c61a-4175-9138-ea1a9cef79d5.png#clientId=ue8d1e6c6-b076-4&from=paste&height=266&id=u8714a9e3&margin=%5Bobject%20Object%5D&name=image.png&originHeight=532&originWidth=1476&originalType=binary&ratio=1&size=217362&status=done&style=none&taskId=u6cf734ad-72f2-41e9-aa7d-606982b9f38&width=738)<br />![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634893906268-ce82e9d6-19d8-4907-83e3-38b2b0509012.png#clientId=u3b77b092-32d8-4&from=paste&id=oy3M4&margin=%5Bobject%20Object%5D&name=image.png&originHeight=288&originWidth=322&originalType=binary&ratio=1&size=10778&status=done&style=none&taskId=u2d498f28-d56c-4d3d-bde4-1645f9f2365)<br />在64位系统上对象类型指针占用64bit，2^64bit能够代表2^34G内存的地址，在实际的机器上，并不需要那么多对象。采用对象压缩指针技术，就使用32bit，2^32bit能够代表4G内存的地址，在应用过程中，能够处理正常情况。这样对象能够占用更少的内存。<br />![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634894037330-cb8c4290-0b79-41aa-98c3-29ec08a2f250.png#clientId=u3b77b092-32d8-4&from=paste&id=AP9ow&margin=%5Bobject%20Object%5D&name=image.png&originHeight=293&originWidth=389&originalType=binary&ratio=1&size=14376&status=done&style=none&taskId=u9f405d51-9e0d-47cd-b190-8ccd6d275fb)<br />使用对象压缩指针技术，在Metaspace空间中存储的Klass结构，该内存需要是一块连续的内存，否则在内存大于4G的机器上，无法准备找到。若内存16G，指针能够表示的内存只有4G，肯定是满足不了的，为了解决这种情况，就分配一块连续小于4G的内存用来存储Klass结构。存储Klass结构的内存是连续的，从某个内存地址开始到某个内存地址结束。找到真正的Klass结构地址，需要加上一个base值。<br />​<br />
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634898917826-09f8102e-c61a-4175-9138-ea1a9cef79d5.png#clientId=ue8d1e6c6-b076-4&from=paste&height=266&id=u8714a9e3&margin=%5Bobject%20Object%5D&name=image.png&originHeight=532&originWidth=1476&originalType=binary&ratio=1&size=217362&status=done&style=none&taskId=u6cf734ad-72f2-41e9-aa7d-606982b9f38&width=738)
+
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634893906268-ce82e9d6-19d8-4907-83e3-38b2b0509012.png#clientId=u3b77b092-32d8-4&from=paste&id=oy3M4&margin=%5Bobject%20Object%5D&name=image.png&originHeight=288&originWidth=322&originalType=binary&ratio=1&size=10778&status=done&style=none&taskId=u2d498f28-d56c-4d3d-bde4-1645f9f2365)
+
+在64位系统上对象类型指针占用64bit，2^64bit能够代表2^34G内存的地址，在实际的机器上，并不需要那么多对象。采用对象压缩指针技术，就使用32bit，2^32bit能够代表4G内存的地址，在应用过程中，能够处理正常情况。这样对象能够占用更少的内存。
+
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634894037330-cb8c4290-0b79-41aa-98c3-29ec08a2f250.png#clientId=u3b77b092-32d8-4&from=paste&id=AP9ow&margin=%5Bobject%20Object%5D&name=image.png&originHeight=293&originWidth=389&originalType=binary&ratio=1&size=14376&status=done&style=none&taskId=u9f405d51-9e0d-47cd-b190-8ccd6d275fb)
+
+使用对象压缩指针技术，在Metaspace空间中存储的Klass结构，该内存需要是一块连续的内存，否则在内存大于4G的机器上，无法准备找到。
+
+若内存16G，指针能够表示的内存只有4G，肯定是满足不了的，为了解决这种情况，就分配一块连续小于4G的内存用来存储Klass结构。
+
+存储Klass结构的内存是连续的，从某个内存地址开始到某个内存地址结束。找到真正的Klass结构地址，需要加上一个base值。
+
 # Class Space 和 Non-Class Space
-由于对象类型指针压缩技术，Metaspace需要一块连续的内存存储Klass结构。但是对应非Klass结构的元数据，则不需要一块联系的内存进行存储。<br />​
+由于对象类型指针压缩技术，Metaspace需要一块连续的内存存储Klass结构。但是对应非Klass结构的元数据，则不需要一块联系的内存进行存储。​
 
-联想到之前提到的全局VirtualSpaceList结构和全局空闲链表ChunkManager结构。<br />![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634901187984-80624674-706e-4e72-a669-c4773a0ff49f.png#clientId=ue8d1e6c6-b076-4&from=paste&height=209&id=u9c9a6357&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1154&originWidth=2080&originalType=binary&ratio=1&size=129896&status=done&style=none&taskId=u3596dce0-b174-4856-abbb-11e4f46f907&width=377)![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634901197436-67fa513e-981e-4e6d-b3ed-a9a076015797.png#clientId=ue8d1e6c6-b076-4&from=paste&height=186&id=ub76aefec&margin=%5Bobject%20Object%5D&name=image.png&originHeight=898&originWidth=2202&originalType=binary&ratio=1&size=85670&status=done&style=none&taskId=u849ac9b2-693a-4426-8d2f-bd421a46351&width=457)<br />class space
+联想到之前提到的全局VirtualSpaceList结构和全局空闲链表ChunkManager结构。
 
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634901187984-80624674-706e-4e72-a669-c4773a0ff49f.png#clientId=ue8d1e6c6-b076-4&from=paste&height=209&id=u9c9a6357&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1154&originWidth=2080&originalType=binary&ratio=1&size=129896&status=done&style=none&taskId=u3596dce0-b174-4856-abbb-11e4f46f907&width=377)
+
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634901197436-67fa513e-981e-4e6d-b3ed-a9a076015797.png#clientId=ue8d1e6c6-b076-4&from=paste&height=186&id=ub76aefec&margin=%5Bobject%20Object%5D&name=image.png&originHeight=898&originWidth=2202&originalType=binary&ratio=1&size=85670&status=done&style=none&taskId=u849ac9b2-693a-4426-8d2f-bd421a46351&width=457)
+
+
+class space
 - 只有一个node节点，并且节点内存很大，是连续的，内存小于4G。
 
 non-class space
-
 - 有N个node节点，每个节点大概为2MB。
 
-
-<br />![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634895460756-8dfce97f-14da-4709-baf7-324547b3b4d6.png#clientId=u3b77b092-32d8-4&from=paste&id=gO0tE&margin=%5Bobject%20Object%5D&name=image.png&originHeight=678&originWidth=764&originalType=binary&ratio=1&size=64871&status=done&style=none&taskId=ua55fa1e9-e133-4efc-8468-9ab12029f9c)<br />​
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634895460756-8dfce97f-14da-4709-baf7-324547b3b4d6.png#clientId=u3b77b092-32d8-4&from=paste&id=gO0tE&margin=%5Bobject%20Object%5D&name=image.png&originHeight=678&originWidth=764&originalType=binary&ratio=1&size=64871&status=done&style=none&taskId=ua55fa1e9-e133-4efc-8468-9ab12029f9c)
+​
 
 全局空闲链表ChunkManager能够将non-class空间和class空间中的空闲的内存利用起来，提高内存的利用率。
 # 真实案例
-Class Space Count：只有一个Node节点<br />NonClass Space Count：有205个Node节点<br />![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634901313437-25b7da26-1c15-4847-ac29-fc1fa65c9f96.png#clientId=ue8d1e6c6-b076-4&from=paste&height=261&id=ue0452417&margin=%5Bobject%20Object%5D&name=image.png&originHeight=522&originWidth=1810&originalType=binary&ratio=1&size=345665&status=done&style=none&taskId=u53f47e7e-fd62-4776-b391-c04b2ee0499&width=905)
+Class Space Count：只有一个Node节点
+
+NonClass Space Count：有205个Node节点
+
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634901313437-25b7da26-1c15-4847-ac29-fc1fa65c9f96.png#clientId=ue8d1e6c6-b076-4&from=paste&height=261&id=ue0452417&margin=%5Bobject%20Object%5D&name=image.png&originHeight=522&originWidth=1810&originalType=binary&ratio=1&size=345665&status=done&style=none&taskId=u53f47e7e-fd62-4776-b391-c04b2ee0499&width=905)
 
 
 # Metaspace的大小
@@ -194,3 +249,4 @@ Klass：最大的一部分是 Klass 结构，它是固定大小的。<br />vtabl
 
 # 参考资料
 [https://www.javadoop.com/post/metaspace](https://www.javadoop.com/post/metaspace)
+[https://stuefe.de/posts/metaspace/what-is-metaspace/](https://stuefe.de/posts/metaspace/what-is-metaspace/)
