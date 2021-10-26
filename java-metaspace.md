@@ -138,13 +138,10 @@ Metaspace内存分配给类加载器多大的内存呢？
 
 ​<br />
 
-
 # 对象类型指针 Class Metadata address
 大家都知道，Java中实例对象都在Heap堆中存储，这些对象对应的类结构都存储在Metaspace空间中。<br />一个实例对象有一个指针指向Metaspace空间所对应的类结构。<br />​<br />
 > 实例对象包含三部分：对象头、实例变量、填充数据。
 > 对象头存储了到对象类型数据的指针。
-
-![image.png](/image/java-metaspace-thirteen.png)
 
 ![image.png](/image/java-metaspace-fourteen.png)
 
@@ -163,10 +160,9 @@ Metaspace内存分配给类加载器多大的内存呢？
 
 联想到之前提到的全局VirtualSpaceList结构和全局空闲链表ChunkManager结构。
 
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634901187984-80624674-706e-4e72-a669-c4773a0ff49f.png#clientId=ue8d1e6c6-b076-4&from=paste&height=209&id=u9c9a6357&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1154&originWidth=2080&originalType=binary&ratio=1&size=129896&status=done&style=none&taskId=u3596dce0-b174-4856-abbb-11e4f46f907&width=377)
+![image.png](/image/java-metaspace-sixteen.png)
 
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634901197436-67fa513e-981e-4e6d-b3ed-a9a076015797.png#clientId=ue8d1e6c6-b076-4&from=paste&height=186&id=ub76aefec&margin=%5Bobject%20Object%5D&name=image.png&originHeight=898&originWidth=2202&originalType=binary&ratio=1&size=85670&status=done&style=none&taskId=u849ac9b2-693a-4426-8d2f-bd421a46351&width=457)
-
+![image.png](/image/java-metaspace-seventeen.png)
 
 class space
 - 只有一个node节点，并且节点内存很大，是连续的，内存小于4G。
@@ -174,7 +170,7 @@ class space
 non-class space
 - 有N个node节点，每个节点大概为2MB。
 
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634895460756-8dfce97f-14da-4709-baf7-324547b3b4d6.png#clientId=u3b77b092-32d8-4&from=paste&id=gO0tE&margin=%5Bobject%20Object%5D&name=image.png&originHeight=678&originWidth=764&originalType=binary&ratio=1&size=64871&status=done&style=none&taskId=ua55fa1e9-e133-4efc-8468-9ab12029f9c)
+![image.png](/image/java-metaspace-eighteen.png)
 ​
 
 全局空闲链表ChunkManager能够将non-class空间和class空间中的空闲的内存利用起来，提高内存的利用率。
@@ -183,7 +179,7 @@ Class Space Count：只有一个Node节点
 
 NonClass Space Count：有205个Node节点
 
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1634901313437-25b7da26-1c15-4847-ac29-fc1fa65c9f96.png#clientId=ue8d1e6c6-b076-4&from=paste&height=261&id=ue0452417&margin=%5Bobject%20Object%5D&name=image.png&originHeight=522&originWidth=1810&originalType=binary&ratio=1&size=345665&status=done&style=none&taskId=u53f47e7e-fd62-4776-b391-c04b2ee0499&width=905)
+![image.png](/image/java-metaspace-nineteen.png)
 
 
 # Metaspace的大小
@@ -194,7 +190,7 @@ NonClass Space Count：有205个Node节点
 -XX:CompressedClassSpaceSize
 ```
 ## Metaspace 空间图
-Metaspace主要分为两个空间，一个是non-class空间，另一个是class空间。non-class空间有许多Node节点，class空间只有一个Node节点，class空间是一块连续的内存。<br />![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1635127890363-6ad67897-a840-4bc2-b2ae-d1889e376053.png#clientId=u46982cdd-7412-4&from=paste&id=u2d5d6c69&margin=%5Bobject%20Object%5D&name=image.png&originHeight=279&originWidth=653&originalType=binary&ratio=1&size=19146&status=done&style=none&taskId=u4b3fb29d-9c8c-4fd0-81db-79e6ec57e57)<br />
+Metaspace主要分为两个空间，一个是non-class空间，另一个是class空间。non-class空间有许多Node节点，class空间只有一个Node节点，class空间是一块连续的内存。<br />![image.png](/image/java-metaspace-twenty.png)<br />
 
 ## -XX:MaxMetaspaceSize
 -XX:MaxMetaspaceSize 代表的是non-class space + class space，也就是这两个空间之和。默认不限制大小，但是还会受到机器本身内存空间的限制。<br />​<br />
@@ -209,7 +205,7 @@ Metaspace主要分为两个空间，一个是non-class空间，另一个是class
 # 一个类大概需要多少Metaspace空间
 一个类所需要的Metaspace空间，分别用到了Metaspace中的non-class space和class space。<br />​
 
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1635129233919-a09f00a4-87d0-4e26-94e0-f1ed83ba2def.png#clientId=u46982cdd-7412-4&from=paste&height=479&id=u89944215&margin=%5Bobject%20Object%5D&name=image.png&originHeight=638&originWidth=677&originalType=binary&ratio=1&size=46527&status=done&style=none&taskId=u695d2709-351b-4bf5-8f6d-3f2ef262d47&width=508)<br />
+![image.png](java-metaspace-twenty-one.png)<br />
 
 ## 深入 class space
 Klass：最大的一部分是 Klass 结构，它是固定大小的。<br />vtable：可变大小，由类中的方法数量决定。<br />itable：可变大小，由这个类所实现接口数量决定。<br />nonstatic oop map：Java类中引用对象的成员的位置，即非静态Oopmap。
