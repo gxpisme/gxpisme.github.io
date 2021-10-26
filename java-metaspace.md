@@ -205,7 +205,7 @@ Metaspace主要分为两个空间，一个是non-class空间，另一个是class
 # 一个类大概需要多少Metaspace空间
 一个类所需要的Metaspace空间，分别用到了Metaspace中的non-class space和class space。<br />​
 
-![image.png](java-metaspace-twenty-one.png)<br />
+![image.png](/image/java-metaspace-twenty-one.png)<br />
 
 ## 深入 class space
 Klass：最大的一部分是 Klass 结构，它是固定大小的。<br />vtable：可变大小，由类中的方法数量决定。<br />itable：可变大小，由这个类所实现接口数量决定。<br />nonstatic oop map：Java类中引用对象的成员的位置，即非静态Oopmap。
@@ -247,5 +247,5 @@ Klass：最大的一部分是 Klass 结构，它是固定大小的。<br />vtabl
 
 
 # 参考资料
-[https://www.javadoop.com/post/metaspace](https://www.javadoop.com/post/metaspace)
-[https://stuefe.de/posts/metaspace/what-is-metaspace/](https://stuefe.de/posts/metaspace/what-is-metaspace/)
+- [https://www.javadoop.com/post/metaspace](https://www.javadoop.com/post/metaspace)
+- [https://stuefe.de/posts/metaspace/what-is-metaspace/](https://stuefe.de/posts/metaspace/what-is-metaspace/)
