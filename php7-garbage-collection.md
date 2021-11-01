@@ -58,11 +58,11 @@ unset($a);
 
 0. 垃圾回收只适用于`array`、`object`这两种类型。
 
-1. 变量的refcount减少到0，那么此变量可以被释放掉，不属于垃圾。
+1. 变量的refcount减少到0，那么此变量可以被释放掉，所占用的内存直接被释放掉，不属于垃圾。
 
 2. 变量的refcount减少之后大于0，那么此变量还不能释放，此变量可能成为一个垃圾。
 
-- 第一种情况就是可以理解为正常的`unset`操作，不属于垃圾。
+- 第一种情况就是可以理解为正常的`unset`操作，不会产生垃圾。
 
 - 第二种情况垃圾回收器才会将变量收集起来。
 
@@ -89,6 +89,8 @@ unset($a);
 经过第三步后
 
 ![](image/date/201805181152_750.png)
+
+**所以总结来看，就是对循环引用的对象，将refcount减1后，判断refcount是否为0，若为0则是垃圾，若不为0，则把refcount加回去**
 
 ## 数据结构
 
@@ -168,7 +170,11 @@ unused用来管理buf中开始加入，后面又删除的节点，这是一个�
 
 ![](image/date/201805181236_969.png)
 
-## 代码解析 
+```
+gc_root_buffer 1 与 gc_root_buffer 2 互相引用
+```
+
+## 代码解析
 
 ### 初始化
 
@@ -192,7 +198,7 @@ ZEND_API void gc_init(void)
 
         gc_reset();
 
-    }    
+    }
 
 }
 
@@ -414,15 +420,15 @@ ZEND_API void ZEND_FASTCALL gc_remove_from_buffer(zend_refcounted *ref)
 
         gc_remove_from_additional_roots(root);
 
-    }    
+    }
 
     if (GC_REF_GET_COLOR(ref) != GC_BLACK) {
 
         GC_TRACE_SET_COLOR(ref, GC_PURPLE);
 
-    }    
+    }
 
-    GC_INFO(ref) = 0; 
+    GC_INFO(ref) = 0;
 
     /* updete next root that is going to be freed */
 
@@ -430,7 +436,7 @@ ZEND_API void ZEND_FASTCALL gc_remove_from_buffer(zend_refcounted *ref)
 
         GC_G(next_to_free) = root->next;
 
-    }    
+    }
 
 }
 
@@ -442,7 +448,7 @@ ZEND_API void ZEND_FASTCALL gc_remove_from_buffer(zend_refcounted *ref)
 
 ZEND_API int zend_gc_collect_cycles(void)
 
-{           
+{
 
     ...
 
@@ -458,7 +464,7 @@ ZEND_API int zend_gc_collect_cycles(void)
 
     count = gc_collect_roots(&gc_flags);
 
-    
+
 
     //释放垃圾
 
@@ -498,7 +504,7 @@ ZEND_API int zend_gc_collect_cycles(void)
 
         current = GC_G(next_to_free);
 
-    } 
+    }
 
 }
 
