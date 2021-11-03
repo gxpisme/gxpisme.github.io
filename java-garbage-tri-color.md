@@ -1,6 +1,6 @@
 # java 垃圾回收的背景
 Java垃圾回收是通过（Tracing GC）来标记出使用的对象，剩下的就是垃圾，也就是未使用的对象。<br />然后将这些垃圾进行清理，从而腾挪出内存空间，供应用程序使用。<br />
-<br />如图：通过GC Roots开始向下遍历，找出用到的对象（ObjectA、ObjectB、ObjectC、ObjectD、ObjectE），没有用到对象ObjectE，标记对象ObjectE是垃圾。<br />![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1635920846062-f05d1d59-a5b6-4926-91eb-039a628de354.png#clientId=u92360aab-8e7b-4&from=paste&height=312&id=ube0cd89c&margin=%5Bobject%20Object%5D&name=image.png&originHeight=624&originWidth=1412&originalType=binary&ratio=1&size=222707&status=done&style=none&taskId=u8a6c71fe-a059-4ca7-b3e9-61da34ec5d5&width=706)<br />
+<br />如图：通过GC Roots开始向下遍历，找出用到的对象（ObjectA、ObjectB、ObjectC、ObjectD、ObjectE），没有用到对象ObjectE，标记对象ObjectE是垃圾。<br />![image.png](/image/java-garbage-tri-color-one.png)<br />
 <br />在（Tracing GC）追踪式垃圾收集的过程中，在原始阶段，会将所有的用户线程中断，只有GC线程在工作，这个过程又称为Stop The World 整个世界都停止了，简称为STW。可以想象下自己使用电脑的时候，电脑总是持续一分钟不能操作，是不是要崩溃了。<br />
 <br />在回来看Java，事实上Java中的垃圾收集器并不是这样做的，而是引入了三色标记算法，将用户线程和垃圾回收线程一起工作，从而降低STW的时间。<br />
 
@@ -22,7 +22,7 @@ Java垃圾回收是通过（Tracing GC）来标记出使用的对象，剩下的
 - A没有引用
 - D引用E，E已经被扫描
 
-灰色对象：E 被垃圾收集器访问过，但是E的引用F和G都没有被扫描过。<br />![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1635921964764-8f24dc7a-178c-4ec9-a58f-856c0e674a1f.png#clientId=uacb8687b-15c8-4&from=paste&height=454&id=ua8916f6e&margin=%5Bobject%20Object%5D&name=image.png&originHeight=908&originWidth=1332&originalType=binary&ratio=1&size=280828&status=done&style=none&taskId=u03fc1c03-11ed-4e44-9562-640001a060a&width=666)<br />​<br />
+灰色对象：E 被垃圾收集器访问过，但是E的引用F和G都没有被扫描过。<br />![image.png](/image/java-garbage-tri-color-two.png)<br />​<br />
 ## 标记图解
 阶段一：选出所有的GC Root<br />阶段二：并发标记
 
