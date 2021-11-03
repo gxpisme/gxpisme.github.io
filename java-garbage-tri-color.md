@@ -32,7 +32,7 @@ Java垃圾回收是通过（Tracing GC）来标记出使用的对象，剩下的
 1. 重复上面2 3个步骤，直到灰色集合为空。
 
 
-<br />![garbage-thi-color.gif](https://cdn.nlark.com/yuque/0/2021/gif/546024/1635922692308-affcdfd7-f11a-4aa6-abaf-6efd4a17819a.gif#clientId=uacb8687b-15c8-4&from=ui&id=u3581b5fc&margin=%5Bobject%20Object%5D&name=garbage-thi-color.gif&originHeight=451&originWidth=706&originalType=binary&ratio=1&size=152861&status=done&style=none&taskId=u1cd64373-f799-4ae5-854e-d7794ef152d)<br />
+<br />![garbage-tri-color.gif](/image/java-garbage-tri-color-three.gif)<br />
 <br />整个标记的过程中，是按照最理想的情况下进行的，也就是STW的情况下运行的。然而实际上用户线程一直存在，与垃圾收集线程共存。<br />​
 
 这个时候会产生两种情况，一种是多标（把本来是垃圾，又标记为可使用对象），另一种是漏标（将可使用对象标记为了垃圾）。<br />​<br />
@@ -40,7 +40,7 @@ Java垃圾回收是通过（Tracing GC）来标记出使用的对象，剩下的
 把本来是垃圾，标记为可使用的对象。在下一次垃圾回收的时候，就会把这个多标的这个对象，垃圾回收掉，<br />这种多标的，下一次垃圾能够收集掉的垃圾，称为浮动垃圾。这种情况是可以容忍的。<br />​
 
 举例一如下图：<br />若此时用户程序操作 D对象不再引用E对象，因此对象E、F、G应该被回收掉。<br />但是实际上，E已经是灰色了，所以它依然会遍历，最后把E、F、G对象放到黑色集合中。<br />这些E、F、G下次垃圾回收时，没有被引用到，自然会被垃圾回收掉。E、F、G就被称为浮动垃圾。<br />
-<br />![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1635928314870-48a61e0f-8717-482f-81f5-b8db875a8ae3.png#clientId=u78f84512-89f4-4&from=paste&height=282&id=u12a5ebcd&margin=%5Bobject%20Object%5D&name=image.png&originHeight=420&originWidth=683&originalType=binary&ratio=1&size=37119&status=done&style=none&taskId=u1a2cbf35-66d4-420e-a7ff-d481f1d7165&width=458.5)<br />举例二如下图：<br />G对象已经扫描完了，G对象已经被标记为黑色了，若此时用户程序E对象不再引用G对象。但本次垃圾回收不掉，下次垃圾收集的时候，才会被回收。G对象也浮动垃圾。<br />![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1635928891543-168992c2-f414-40bd-b2e5-435e32c89849.png#clientId=u78f84512-89f4-4&from=paste&height=414&id=Era81&margin=%5Bobject%20Object%5D&name=image.png&originHeight=828&originWidth=1090&originalType=binary&ratio=1&size=153387&status=done&style=none&taskId=ufb2b8f81-db99-4052-841c-2fded5bf189&width=545)<br />
+<br />![image.png](/image/java-garbage-tri-color-four.png)<br />举例二如下图：<br />G对象已经扫描完了，G对象已经被标记为黑色了，若此时用户程序E对象不再引用G对象。但本次垃圾回收不掉，下次垃圾收集的时候，才会被回收。G对象也浮动垃圾。<br />![image.png](/image/java-garbage-tri-color-five.png)<br />
 
 ## 漏标
 假设GC 线程执行遍历灰色对象E了，如下图所示。<br />
@@ -50,7 +50,7 @@ var G = objE.fieldG;
 objE.fieldG = null;  // 灰色E 断开引用 白色G
 objD.fieldG = G;  // 黑色D 引用 白色G
 ```
-然后GC线程继续跑，因为E已经不对G引用了，所以不会遍历到对象G了。虽然D引用了G，但因为D已经是黑色了，不会在遍历了。最终垃圾回收的时候会把对象G当成垃圾回收掉，但是应用程序中其实还是用到了，这种情况是接受不了的。<br />![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1635929394923-29668591-5192-4dc9-85cf-e977664ce0c4.png#clientId=u78f84512-89f4-4&from=paste&height=438&id=udc05553a&margin=%5Bobject%20Object%5D&name=image.png&originHeight=876&originWidth=1384&originalType=binary&ratio=1&size=308676&status=done&style=none&taskId=u51f95688-faad-47a2-b547-ae4d5c97b44&width=692)<br />​
+然后GC线程继续跑，因为E已经不对G引用了，所以不会遍历到对象G了。虽然D引用了G，但因为D已经是黑色了，不会在遍历了。最终垃圾回收的时候会把对象G当成垃圾回收掉，但是应用程序中其实还是用到了，这种情况是接受不了的。<br />![image.png](/image/java-garbage-tri-color-six.png)<br />​
 
 在搜索引擎中，在《深入理解Java虚拟机：JVM高级特性与最佳实践》中均给出了出现上面漏标出现的条件。<br />条件如下：
 ```java
@@ -80,7 +80,7 @@ void oop_field_store(oop* field, oop new_value) {
 ```
 ​
 
-主要针对这个操作`objD.fieldG = G;  // 黑色D 引用 白色G`，进行写屏障处理。<br />![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1635932180691-bd34ff48-289c-4ef7-bb90-355e6f4b7101.png#clientId=u78f84512-89f4-4&from=paste&height=201&id=uc1a8cc49&margin=%5Bobject%20Object%5D&name=image.png&originHeight=402&originWidth=474&originalType=binary&ratio=1&size=104617&status=done&style=none&taskId=u457cbd2f-f362-45d9-bde5-75617b988f9&width=237)<br />进行写屏障处理，将新引用的G对象放到需要重新标记的集合里，`remark_set.add(new_value);`后面再扫描一下就行了，保障了不会漏标。
+主要针对这个操作`objD.fieldG = G;  // 黑色D 引用 白色G`，进行写屏障处理。<br />![image.png](/image/java-garbage-tri-color-seven.png)<br />进行写屏障处理，将新引用的G对象放到需要重新标记的集合里，`remark_set.add(new_value);`后面再扫描一下就行了，保障了不会漏标。
 ```java
 void post_write_barrier(oop* field, oop new_value) {
    remark_set.add(new_value); // 记录新引用的对象
@@ -91,7 +91,7 @@ void post_write_barrier(oop* field, oop new_value) {
 ### 漏标针对（条件②灰色断开引用白色）的解决方案
 可以把断开引用的白色，记录下来，保持最开始时候的样子，将这个白色对象置为灰色对象，最后重新标记下。这个其实就是原始快照（Snapshot At The Beginning）。<br />​
 
-主要针对这个操作`objE.fieldG = null;  // 灰色E 断开引用 白色G `，进行写屏障处理。上面已经介绍了写屏障，可以上翻再回顾下。<br />![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1635932167636-3e36c369-4285-41fe-9d43-9f5f17bfb602.png#clientId=u78f84512-89f4-4&from=paste&height=222&id=u847bff94&margin=%5Bobject%20Object%5D&name=image.png&originHeight=444&originWidth=468&originalType=binary&ratio=1&size=102917&status=done&style=none&taskId=u55f40125-75c3-4922-98a9-d50130a7773&width=234)<br />
+主要针对这个操作`objE.fieldG = null;  // 灰色E 断开引用 白色G `，进行写屏障处理。上面已经介绍了写屏障，可以上翻再回顾下。<br />![image.png](/image/java-garbage-tri-color-eight.png)<br />
 <br />这里是如何处理的呢？其实也就是把G记录了下来，`remark_set.add(old_value);`后面再重新扫描下。
 ```java
 void pre_write_barrier(oop* field) {
@@ -127,7 +127,7 @@ void pre_write_barrier(oop* field) {
 ```
 ​
 
-但是我想指出的是，若用户线程将黑色对象直接指向了白色对象呢？如下图：<br />![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1635930312177-67469275-207d-4626-bfc1-53649577e528.png#clientId=u78f84512-89f4-4&from=paste&height=395&id=u8731d2cd&margin=%5Bobject%20Object%5D&name=image.png&originHeight=790&originWidth=1058&originalType=binary&ratio=1&size=190400&status=done&style=none&taskId=u503d586b-a4ed-4de5-a826-7920d97cc3f&width=529)<br />
+但是我想指出的是，若用户线程将黑色对象直接指向了白色对象呢？如下图：<br />![image.png](/image/java-garbage-tri-color-nine.png)<br />
 <br />那岂不是出现漏标就不是当且仅当那两个条件了，在论文中[https://www.cs.cmu.edu/~fp/courses/15411-f14/misc/wilson94-gc.pdf](https://www.cs.cmu.edu/~fp/courses/15411-f14/misc/wilson94-gc.pdf)  作者是这样写
 ```java
 If the mutator creates a pointer from a black object to a white one it must somehow notify the collector that its assumption has
