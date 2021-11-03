@@ -1,3 +1,5 @@
+# Java 垃圾回收 三色标记
+
 # java 垃圾回收的背景
 Java垃圾回收是通过（Tracing GC）来标记出使用的对象，剩下的就是垃圾，也就是未使用的对象。<br />然后将这些垃圾进行清理，从而腾挪出内存空间，供应用程序使用。<br />
 <br />如图：通过GC Roots开始向下遍历，找出用到的对象（ObjectA、ObjectB、ObjectC、ObjectD、ObjectE），没有用到对象ObjectE，标记对象ObjectE是垃圾。<br />![image.png](/image/java-garbage-tri-color-one.png)<br />

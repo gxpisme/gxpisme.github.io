@@ -62,6 +62,7 @@
  - [JAVA-动态代理-学习笔记](java-dynamic-proxy-study-note)
  - [JAVA-类加载](java-classloader)
  - [JAVA-垃圾回收](java-garbage-collector)
+ - [JAVA-垃圾回收-三色标记](java-garbage-tri-color)
  - [JAVA-Metaspace-学习笔记](java-metaspace)
 
 ## 缓存-redis
