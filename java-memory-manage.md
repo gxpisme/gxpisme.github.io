@@ -28,14 +28,18 @@ public class Dog {
 
 
 `Dog yellow = new Dog("大黄");`
+
 `Dog white = new Dog("小白");`
 
 不难理解，这里new出来的实例对象是需要存储起来的，哪这个实例存在哪了呢？new出来的对象都存放到了一块内存上，这块内存叫堆（Heap）。
+
 ![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1636014406451-5c0b2b12-c5c0-48f6-9168-ca91d762f838.png#clientId=u06b34608-3eab-4&from=paste&height=272&id=uda29942b&margin=%5Bobject%20Object%5D&name=image.png&originHeight=544&originWidth=414&originalType=binary&ratio=1&size=70833&status=done&style=none&taskId=u5669994c-9206-4b69-94cc-837b9a3316c&width=207)
 
 
 至于Dog这个类，Dog这个类有自己的属性name，有自己的方法say。这些信息，同样有地方存储。存储的地方称为方法区，在JDK1.8又称为元数据空间。
+
 ![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1636014326425-42f0fb77-b10d-42e1-b54b-3e482bfb04fa.png#clientId=u06b34608-3eab-4&from=paste&height=284&id=u3f266d30&margin=%5Bobject%20Object%5D&name=image.png&originHeight=568&originWidth=480&originalType=binary&ratio=1&size=52319&status=done&style=none&taskId=ubd0529f3-a05a-41f5-83d2-2f4ad83818f&width=240)
+
 （yellow）大黄和（white）小白，这两个对象怎么知道自己属于哪个类呢？其实对象中会存在一个类型指针指向它的类型。用来知道（yellow）大黄属于Dog类的，知道（white）小白属于Dog类的。
 ​
 
@@ -59,10 +63,12 @@ public class Dog {
 
 
 栈帧中就存储了变量、方法出口等信息。
+
 ![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1636016187270-b23e4b93-8aef-47d1-93b5-97672eea2690.png#clientId=u06b34608-3eab-4&from=paste&height=239&id=u09c65188&margin=%5Bobject%20Object%5D&name=image.png&originHeight=478&originWidth=760&originalType=binary&ratio=1&size=140264&status=done&style=none&taskId=ube2b8ef9-d5ce-4a5d-be8e-4378d07d9bb&width=380)
 
 
 栈帧中存储了对象指针，也就是Heap堆中的对象大黄的地址。
+
 ![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1636016306597-68bbe26c-4f25-42a9-aac1-6b303c88d17e.png#clientId=u06b34608-3eab-4&from=paste&height=297&id=u87a7dd74&margin=%5Bobject%20Object%5D&name=image.png&originHeight=594&originWidth=1810&originalType=binary&ratio=1&size=370743&status=done&style=none&taskId=u60329245-92a6-4bc8-9874-1a84f1381ed&width=905)
 
 
@@ -74,6 +80,7 @@ public class Dog {
 栈内存：每个线程一块内存，单独的。
 堆内存：多个线程共享内存，共享的，共用的。
 元数据空间内存：多个线程共享内存，共享的，共用的。
+
 ![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1636016651700-6423da23-baa0-4e17-bb9d-18c0fe5661ea.png#clientId=u06b34608-3eab-4&from=paste&height=411&id=ub0c01d9f&margin=%5Bobject%20Object%5D&name=image.png&originHeight=822&originWidth=1828&originalType=binary&ratio=1&size=543697&status=done&style=none&taskId=ue2ea179f-de15-470e-986c-0187656ef87&width=914)
 
 
