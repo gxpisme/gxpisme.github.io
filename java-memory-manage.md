@@ -31,7 +31,7 @@ public class Dog {
 
 `Dog white = new Dog("小白");`
 
-不难理解，这里new出来的实例对象是需要存储起来的，哪这个实例存在哪了呢？new出来的对象都存放到了一块内存上，这块内存叫堆（Heap）。
+不难理解，这里new出来的实例对象是需要存储起来的，那这个实例存在哪了呢？new出来的对象都存放到了一块内存上，这块内存叫堆（Heap）。
 
 ![image.png](/image/java-memory-manage-one.png)
 
