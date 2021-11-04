@@ -55,6 +55,7 @@
  - [PHP7 内存管理 （二）](php7-memory-manage-2)
 
 ## 应用程序-java
+ - [JAVA-内存管理](java-memory-manage)
  - [JAVA 切面 AOP(Aspect Oriented Programming)](java-aop)
  - [JAVA锁-Synchronized](java-synchronized)
  - [JAVA锁-ReentrantLock](java-reentrantlock)
