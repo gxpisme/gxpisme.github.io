@@ -147,6 +147,7 @@ VisualVM 这个工具，可以将上面导出的堆文件`heap.bin`导进去进�
 
 # Arthas
 > 阿里巴巴开源的一个java诊断工具 [https://github.com/alibaba/arthas](https://github.com/alibaba/arthas)
+
 > 用户手册：[https://arthas.aliyun.com/doc/](https://arthas.aliyun.com/doc/)
 
 
@@ -157,7 +158,7 @@ VisualVM 这个工具，可以将上面导出的堆文件`heap.bin`导进去进�
 1. `top` 确定最耗cpu的进程。
 2. `top -Hp PID（进程ID）`，显示一个进程ID的线程运行信息列表 (按键`P` CPU按占有资源排序)。
 3. `printf "%x\n" 线程ID`，线程ID从10进制转16进制。
-4. jstack 进程ID | grep "刚才转的16进制"，查看相应的代码。
+4. `jstack 进程ID | grep "刚才转的16进制"` 查看相应的代码。
 
 ## Full GC如何排查
 
