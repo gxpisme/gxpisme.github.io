@@ -7,8 +7,7 @@
 
 
 
-<a name="ICEGh"></a>
-# PHP 类加载
+## PHP 类加载
 一般都是采用魔术函数，php里面有__autoload()方法。<br />
 
 ```php
@@ -19,6 +18,7 @@ class a {
     }
 }
 ```
+
 ```php
 <?php
 // 这里就是魔术方法，当找类找不到时，就会调用该方法。
@@ -30,13 +30,16 @@ function __autoload($name) {
 
 new a();
 ```
+
 ```php
+
 [xpisme@aliyun /home/xpisme] ls
 a.php b.php
 // 命令行直接执行b.php
 [xpisme@aliyun /home/xpisme] php b.php
 ----------- class >> a << class ---------
 from a class
+
 ```
 
 <br />虽然上面这些都是demo级别的，但是原理确实如此，通过魔术方法来实现的。<br />
@@ -50,11 +53,12 @@ from a class
 
 
 1. 用某个类  `new a()`
-1. 找某个类  `__autoload($className)`
-1. 加载某个类 `require_once($class)`
+2. 找某个类  `__autoload($className)`
+3. 加载某个类 `require_once($class)`
 
 
-# Java类加载
+## Java类加载
+
 每个类都有自己的ClassLoader，当用到某个类的时候，就会启用该类的ClassLoader进行类加载。
 
 ```java
@@ -133,6 +137,10 @@ if (离用户最远.loadClass) {
 - 离用户最远 - BootstrapClassLoader（启动类加载）（C++编写）（parent是null）
 
 
+上面其实就是java中的双亲委派模型（Parents Delegation Model）
+工作流程就是一个类加载器收到类加载请求，它首先不会自己尝试加载这个类，而是会把请求委托给父类的加载器来完成。因此所有的加载请求最终都会传送到顶部的启动类加载器。
+
+
 <br />接下来看下精简核心的源代码ClassLoader类。
 
 ```java
@@ -162,7 +170,6 @@ if (离用户最远.loadClass) {
 
 <br />简单理解就可以按照上面所描述的进行理解。<br />
 
-<a name="NqOKJ"></a>
 ### 代码验证
 ```java
 public class One {
@@ -188,8 +195,13 @@ sun.misc.Launcher$ExtClassLoader
 -----
 null
 ```
+可以看到先从 AppClassLoader（应用类加载），然后到ExtClassLoader（扩展类加载），最后到BootstrapClassLoader（启动类加载）。
 
-将One.class 打包为One.jar 放到jre/lib/ext 下，然后在执行<br />`jar cvf One.jar One.class`
+
+接下来，若将One.class 打包为One.jar 放到jre/lib/ext 下，然后再执行
+
+`jar cvf One.jar One.class`
+
 
 ```java
 [xpisme@aliyun /home/xpisme] java One
@@ -197,5 +209,12 @@ sun.misc.Launcher$ExtClassLoader
 -----
 null
 ```
+可以看到可以看到先从到ExtClassLoader（扩展类加载），然后到BootstrapClassLoader（启动类加载）。这是因为把One.jar放到ExtClassLoader加载的目录下了。
 
 
+
+## Java类的唯一性
+对于任意一个类，都必须由加载它的类加载器和类本身一起共同确立其在Java虚拟机中的唯一性，每一个类加载器，都拥有一个独立的类名称空间。
+比较两个类是否“相等”，只有在这两个类是由同一个类加载器加载的前提下才有意义，否则，即使这两个类来源于同一个Class文件，被同一个Java虚拟机加载，只要加载它们的类加载器不同，那这两个类就必定不相等。
+
+若一个类，被A类加载器加载了一遍，B类加载器也加载了一遍。这个类在java虚拟机中其实是两个，并不相等。只有类加载器+类才能确定唯一性。
