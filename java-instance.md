@@ -1,6 +1,6 @@
 # 单例
 > 单例简单来讲就算是在内存中一个对象只存在一个实例。
-> 
+>
 > 如何保证一个对象在内存中只存在一个实例呢？有很多的知识点，一起来学习下。
 
 
@@ -15,7 +15,7 @@
   		// 静态初始化器由JVM在类初始化时运行，在类装入之后，但在类被任何线程使用之前。
         private static Hunger instance = new Hunger();
 
-        private Hunger() {}    
+        private Hunger() {}
 
         public static Hunger getInstance() {
             return instance;
@@ -60,7 +60,7 @@ public class FirstDemo {
 
     public static FirstDemo getInstance() throws InterruptedException {
         if (firstDemo == null) {
-			// 这里并发的情况下，会有多个线程在这里执行，先获取锁然后创建对象。
+            // 这里并发的情况下，会有多个线程在这里执行，先获取锁然后创建对象。
             synchronized (FirstDemo.class) {
                 firstDemo = new FirstDemo();
             }
@@ -69,7 +69,7 @@ public class FirstDemo {
     }
 }
 ```
-假设有两个线程同时到了，线程A获取到了锁，线程B在此等待，线程A创建对象操作完后，线程A释放锁，此时线程B获取到锁，又进到了里面，还是会重新创建对象。**所以就引出了Double Check Lock**
+假设有两个线程，线程A和线程B同时到了，线程A获取到了锁，线程B在此等待，线程A创建对象操作完后，线程A释放锁，此时线程B获取到锁，又进到了里面，还是会重新创建对象。**所以就引出了Double Check Lock**
 
 #### Double Check Lock
 
@@ -83,12 +83,12 @@ public class FirstDemo {
 
     public static FirstDemo getInstance() throws InterruptedException {
         if (firstDemo == null) {
-			// 这里并发的情况下，会有多个线程在这里执行，先获取锁然后创建对象。
+            // 这里并发的情况下，会有多个线程在这里执行，先获取锁然后创建对象。
             synchronized (FirstDemo.class) {
-            		// 防止等待锁的线程B（此时已经有线程A创建好并释放锁），线程B在判断下就能保证只有一个对象了。
-            		if (firstDemo == null) {
-	            		firstDemo = new FirstDemo();
-            		}
+                // 防止等待锁的线程B（此时已经有线程A创建好并释放锁），线程B在判断下就能保证只有一个对象了。
+            	if (firstDemo == null) {
+                    firstDemo = new FirstDemo();
+                }
             }
         }
         return firstDemo;
@@ -100,15 +100,15 @@ public class FirstDemo {
 `new FirstDemo()` 在java中创建一个对象不是一个原子操作，可以被分解为三个步骤。
 
 ```
-//1：分配对象的内存空间
+//1：分配对象FirstDemo的内存空间
 memory = allocate();
-//2：初始化对象
-ctorInstance(memory);  
+//2：初始化对象(给相应的属性进行赋值)
+ctorInstance(memory);
 //3：设置instance指向刚分配的内存地址
-instance = memory;     
+instance = memory;
 ```
 
-在上面的伪代码中2和3可能会被指令重排。（为什么会指令重排，因为指令重排能够压榨CPU的利用率）。
+在上面的伪代码中2和3可能会被指令重排。（为什么会指令重排，因为指令重排能够压榨CPU的性能）。
 
 重排之后的伪代码如下
 
@@ -116,9 +116,9 @@ instance = memory;
 //1：分配对象的内存空间
 memory = allocate();
 //3：设置instance指向刚分配的内存地址
-instance = memory;   
+instance = memory;
 //2：初始化对象
-ctorInstance(memory);  
+ctorInstance(memory);
 ```
 在单线程创建单例的场景，肯定是没有问题的。但是在多线程并发的情况下，可能会导致某些线程访问到未初始化的变量，然后进行后面操作，肯定是有问题的。
 
@@ -134,14 +134,15 @@ ctorInstance(memory);
 
 所以总结来看由于指令重排序导致了线程B拿到一个空值实例，肯定在业务中有问题的。
 
-如何防止指令重排序呢？ 采用`volidate`即可。
+在上面的代码中看，线程A创建对象中的初始化对象还未完成，锁还未释放，线程B在第最外层的判断为false，直接返回了一个空值的对象。
 
+如何防止指令重排序呢？ 采用`volidate`即可。
 
 
 ```
 public class FirstDemo {
 
-	// volidate 就是防止指令重排序
+    // volidate 就是防止指令重排序
     private static volidate FirstDemo firstDemo = null;
 
     private FirstDemo() {
@@ -151,10 +152,10 @@ public class FirstDemo {
         if (firstDemo == null) {
 			// 这里并发的情况下，会有多个线程在这里执行，先获取锁然后创建对象。
             synchronized (FirstDemo.class) {
-            		// 防止等待锁的线程B（此时已经有线程A创建好并释放锁），线程B在判断下就能保证只有一个对象了。
-            		if (firstDemo == null) {
-	            		firstDemo = new FirstDemo();
-            		}
+                // 防止等待锁的线程B（此时已经有线程A创建好并释放锁），线程B在判断下就能保证只有一个对象了。
+                if (firstDemo == null) {
+                    firstDemo = new FirstDemo();
+                }
             }
         }
         return firstDemo;
