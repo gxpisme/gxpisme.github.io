@@ -78,7 +78,7 @@
  - [MySQL 慢SQL](mysql-slow-log)
  - [MySQL-Isolation 隔离级别](mysql-isolation)
 
-## 计算机网络-ip
+## 计算机基础
  - [ip](ip)
 
 ## 学习笔记
