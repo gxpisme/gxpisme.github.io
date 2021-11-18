@@ -1,4 +1,4 @@
-# JMM Java Memory Model
+# JMM (Java Memory Model)
 
 先来回顾下Java的内存管理，看如下图所示。
 

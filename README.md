@@ -56,7 +56,7 @@
 
 ## 应用程序-java
  - [JAVA-内存管理](java-memory-manage)
- - [JAVA-内存模型](java-memory-model)
+ - [JAVA-内存模型-JMM](java-memory-model)
  - [JAVA 切面 AOP(Aspect Oriented Programming)](java-aop)
  - [JAVA锁-Synchronized](java-synchronized)
  - [JAVA锁-ReentrantLock](java-reentrantlock)
