@@ -6,11 +6,12 @@
 
 每个线程中会有栈帧，栈帧对应的就是函数操作。
 
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1637203925949-0e798a60-397d-4b7d-89f3-623d0921048a.png#clientId=u2439980d-88a0-4&from=paste&height=338&id=ue1a71d25&margin=%5Bobject%20Object%5D&name=image.png&originHeight=675&originWidth=1500&originalType=binary&ratio=1&size=415865&status=done&style=none&taskId=u8178dcc8-634b-4ce0-90ef-4eb30d2702c&width=750)
+![image.png](/image/java-memory-model-1.png)
 
 
 将共享的内存抽象一下，看下图所示：
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/546024/1637205370150-8779fc19-c739-46c7-9ef6-311dfeecfb7d.png#clientId=u2439980d-88a0-4&from=paste&height=241&id=u8d9b1f5f&margin=%5Bobject%20Object%5D&name=image.png&originHeight=482&originWidth=904&originalType=binary&ratio=1&size=175301&status=done&style=none&taskId=u95c17546-1d4e-48a9-83b7-7423d8d5202&width=452)
+
+![image.png](/image/java-memory-model-2.png)
 
 - 共享变量在主内存中，在工作内存中会有共享变量的**副本**。
 
