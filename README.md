@@ -66,6 +66,7 @@
  - [JAVA-垃圾回收](java-garbage-collector)
  - [JAVA-垃圾回收-三色标记](java-garbage-tri-color)
  - [JAVA-Metaspace-学习笔记](java-metaspace)
+ - [Spring-注册Bean](spring-register-bean)
 
 ## 缓存-redis
  - [关于Redis的思考](redis-think)

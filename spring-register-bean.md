@@ -1,3 +1,5 @@
+# Spring 注册bean
+
 <a name="Gp9xq"></a>
 # 如果没有bean的情况是什么样的？
 在[https://start.spring.io/](https://start.spring.io/) 直接下载一个jar包，定义一个类Foo
