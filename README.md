@@ -84,5 +84,8 @@
  - [ip](ip)
  - [cpu高速缓存](cpu-cache)
 
+## Linux
+- [awk](https://mp.weixin.qq.com/s/MqZf80E6my3TUhYN6YgPIg)
+
 ## 学习笔记
  - [技术学习笔记](note)
