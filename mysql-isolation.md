@@ -147,14 +147,14 @@ INSERT INTO t VALUES (1,2),(2,2);
 事务A能够读到事务B未提交的内容就是脏读 dirty read。
 
 ### 幻读 phantom read
-同一个事务内，同样的查询，数据返回不一致，**重点是行数变了。**
+同一个事务内，同样的查询，数据返回不一致，**重点是行数变了。侧重`INSERT`和`DELETE`**
 
 会发生的隔离级别`READ UNCOMMITTED`和`READ COMMITTED`和`REPEATABLE READ`。
 
 ![](https://i.stack.imgur.com/aCtew.png)
 
 ### 不可重复读 Non-Repeatable Read
-同一个事务内，两次取同行数据，发现数据不一致，**重点是同样的行，返回的行数不变。**
+同一个事务内，两次取同行数据，发现数据不一致，**重点是同样的行，返回的行数不变。侧重`UPDATE`**
 
 会发生的隔离级别`READ UNCOMMITTED`和`READ COMMITTED`。
 
