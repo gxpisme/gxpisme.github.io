@@ -77,6 +77,7 @@ insert into t select 5;
 
 唯一索引 `unique key`
 ---
+
 ```
 drop table if exists t;
 create table t ( a int, unique key (a));
@@ -84,6 +85,8 @@ insert into t select 1;
 insert into t select 2;
 insert into t select 5;
 ```
+
+
 | 时间 | 会话A | 会话B |
 |:-----|:-----|:-----|
 | 1 | Begin |  |
