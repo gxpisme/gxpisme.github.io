@@ -75,7 +75,7 @@ insert into t select 5;
 
 表`t`中共有`1、2、5` 三个值。会话A中首先对`a=5`进行锁定，由于`a`是主键，主键都是唯一的。因此就从`Next-Key Lock` 降级为`Record Lock`，仅锁定5这个值。而不是范围(2, 5] (5, +∞)，因此插入4这个值非阻塞。
 
-唯一索引 `unique key`
+唯一索引 unique key
 ---
 
 ```
@@ -96,5 +96,5 @@ insert into t select 5;
 | 5 |  | commit 立即成功 |
 | 6 | commit | - |
 
-## 证明是唯一索引，就会从`Next-Key Lock` 降级为`Record Lock`
+## 证明是唯一索引，就会从Next-Key Lock 降级为Record Lock
 
