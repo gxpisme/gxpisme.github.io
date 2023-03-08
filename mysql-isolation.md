@@ -149,7 +149,9 @@ INSERT INTO t VALUES (1,2),(2,2);
 ### 幻读 phantom read
 同一个事务内，同样的查询，数据返回不一致，**重点是行数变了。侧重`INSERT`和`DELETE`**
 
-会发生的隔离级别`READ UNCOMMITTED`和`READ COMMITTED`和`REPEATABLE READ`。
+会发生的隔离级别`READ UNCOMMITTED`和`READ COMMITTED`
+
+`REPEATABLE READ` 会通过Next-Key Locking机制解决幻读问题
 
 ![](https://i.stack.imgur.com/aCtew.png)
 
