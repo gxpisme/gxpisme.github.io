@@ -153,14 +153,14 @@ INSERT INTO t VALUES (1,2),(2,2);
 
 `REPEATABLE READ` 会通过Next-Key Locking机制解决幻读问题
 
-![](https://i.stack.imgur.com/aCtew.png)
+![](/image/mysql-isolation-1.png)
 
 ### 不可重复读 Non-Repeatable Read
 同一个事务内，两次取同行数据，发现数据不一致，**重点是同样的行，返回的行数不变。侧重`UPDATE`**
 
 会发生的隔离级别`READ UNCOMMITTED`和`READ COMMITTED`。
 
-![](https://i.stack.imgur.com/iPI0C.png)
+![](/image/mysql-isolation-2.png)
 
 
 参考资料
