@@ -2,7 +2,7 @@
 
 # java虚拟机 和 java语言
 java虚拟机可以支持其他语言运行在java虚拟机之上，java虚拟机上执行的是字节码。
-java语言翻译成字节码才能在java虚拟机上执行，因此只有任何语言能够翻译成字节码，同样可以运行在java虚拟机上。
+java语言翻译成字节码才能在java虚拟机上执行，因此只要任何语言能够翻译成字节码，同样可以运行在java虚拟机上。
 
 ![image.png](/image/mynote/java_class_struct_1.png)
 
