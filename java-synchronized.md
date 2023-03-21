@@ -1,17 +1,11 @@
----
-title: JAVA锁-Synchronized
-date: 2019-07-07 16:24:27
-tags:
-    - java
-categories: java
----
-<!-- more -->
-> 最近在学习java，因为公司所有的项目都在java化，抛弃世界上最好的语言PHP，来学习在java也还是很不错的。
+# JAVA锁-Synchronized
 
+> 最近在学习java，因为公司所有的项目都在java化，抛弃世界上最好的语言PHP，来学习在java也还是很不错的。
+>
 > 毕竟唯一不变的就是变化，有变化才有成长。
 
 
-### 背景
+## 背景
 JAVA是并发编程，存在多线程，存在共享数据（临界资源）。
 
 多线程操作共享数据（临界资源）就会出现问题。
@@ -20,12 +14,12 @@ JAVA是并发编程，存在多线程，存在共享数据（临界资源）。
 
 Thread A 第一步和 Thread B第一步是同时的就会导致数据错乱。 假设i是访问量，则访问量数据就是错的。
 
-### synchronized
+## synchronized
 
 > 两个线程同时操作临界资源
 
-#### 使用 修饰方法&修饰代码块
-##### 修饰方法 多个线程操作一个实例
+### 使用 修饰方法&修饰代码块
+#### 修饰方法 多个线程操作一个实例
 
 ```
 public class AccountingSync implements Runnable{
@@ -60,7 +54,7 @@ public class AccountingSync implements Runnable{
 
 如果对实例方法加synchronized关键字呢？
 
-##### 修饰方法  多个线程操作一个实例  synchronized 修饰实例方法
+#### 修饰方法  多个线程操作一个实例  synchronized 修饰实例方法
 ```
 public class AccountingSync implements Runnable{
     /* 共享资源(临界资源) */
@@ -94,7 +88,7 @@ public class AccountingSync implements Runnable{
 
 在这里是多个线程操作的是同一个实例，如果操作不同的实例呢？
 
-##### 修饰方法  多个线程操作不同的实例， synchronized修饰实例方法
+#### 修饰方法  多个线程操作不同的实例， synchronized修饰实例方法
 ```
 public class AccountingSync implements Runnable{
     /* 共享资源(临界资源) */
@@ -126,7 +120,7 @@ public class AccountingSync implements Runnable{
 结果小于2000000，原因是一个对象可以有多个实例，不同线程操作不同实例，锁的粒度依然是实例维度，而不是对象维度，但是现在是多个线程操作不同的实例，所以锁根本对临界资源（共享资源）没有发挥作用。
 
 如果是修饰的是静态方法呢？
-##### 修饰方法  多个线程操作不同的实例， synchronized修饰静态方法
+#### 修饰方法  多个线程操作不同的实例， synchronized修饰静态方法
 ```
 public class AccountingSync implements Runnable{
     /* 共享资源(临界资源) */
@@ -159,7 +153,7 @@ public class AccountingSync implements Runnable{
 
 除了用synchronized修饰方法，还是可以用来修饰代码块的，接下来看如果实现上面类似的功能，用synchronized修饰代码块如何实现呢？
 
-##### 修饰代码块 synchronized修饰代码块  作用于实例
+#### 修饰代码块 synchronized修饰代码块  作用于实例
 ```
 public class AccountingSync implements Runnable{
     /* 共享资源(临界资源) */
@@ -191,7 +185,7 @@ public class AccountingSync implements Runnable{
 
 如果是多个线程操作不同实例呢，那这个代码肯定就不行了，接下来看下这种情况如何使用synchronized。
 
-##### 修饰代码块  synchronized修饰代码块  作用于对象
+#### 修饰代码块  synchronized修饰代码块  作用于对象
 ```
 public class AccountingSync implements Runnable{
     /* 共享资源(临界资源) */
@@ -222,11 +216,11 @@ public class AccountingSync implements Runnable{
 多个线程操作多个实例，这些实例都属于一个对象。所以直接这样修饰就可以了`synchronized(AccountingSync.class)`
 
 
-#### 解读字节码
+### 解读字节码
 > JVM是基于进入和退出monitor对象来实现的同步，无论是显示同步还是隐式同步。
-
+>
 > 显示同步是指 synchronized修饰的是代码块   是基于monitorenter 和 monitorexit 指令来实现
-
+>
 > 隐式同步是指 synchronized修饰的是方法  是基于ACC_SYNCHRONIZED实现
 
 ```
@@ -307,18 +301,18 @@ java反编译之后代码 `javap -v Sync.class`
         line 10: 8
 }
 ```
-#### 对象头和monitor
-##### 对象头
+### 对象头和monitor
+#### 对象头
 > 对象在内存中的布局分为三块区域：对象头、实例数据和对齐填充
-
+>
 > 实例数据：存放类的属性数据信息，包括父类的属性信息
-
+>
 > 填充数据：由于虚拟机要求对象起始地址必须是8字节的整数倍，为了对齐而填充的数据
 
 ![undefined](image/date/mark-word.png)
 
 
-##### monitor
+#### monitor
 在JAVA中一切皆对象，任何对象都有一个内部锁或者成为monitor锁
 
 在JVM虚拟机中（HotSpot 大部分都是HotSpot）, monitor是由ObjectMonitor实现的，其主要数据结构如下
@@ -352,14 +346,14 @@ ObjectMonitor() {
 当一个线程释放监视器时，在入口区和等待区的等待线程都会去竞争监视器，如果入口区的线程赢了，会从2号门进入；如果等待区的线程赢了会从4号门进入。只有通过3号门才能进入等待区，在等待区中的线程只有通过4号门才能退出等待区，也就是说一个线程只有在持有监视器时才能执行wait操作，处于等待的线程只有再次获得监视器才能退出等待状态。
 
 
-#### 锁类型
-##### 偏向锁
+### 锁类型
+#### 偏向锁
 偏向锁是JDK6引进的，通过研究发现，在大多数情况下，锁不仅不存在多线程竞争，而且总是同一个线程获取，为了让线程获取锁的代价更低，引进了偏向锁。
 
 ![undefined](image/date/compare-threadid.png)
 可以看到偏向锁是在对象头中有存储线程ID的，如果与现有的线程ID一致，只需要执行一次CAS（Compare and swap）操作即可，就不会触发轻量级锁，进而降低了锁的代价。 但是如果线程ID不一致，则会升级为轻量级锁。
 
-##### 轻量级锁
+#### 轻量级锁
 - 轻量级锁的目的是 在没有多线程竞争的前提下，减少传统的重量级锁使用操作系统互斥量产生的性能消耗。
 - 轻量级锁的触发条件 当关闭偏向锁功能或者多个线程竞争偏向锁导致偏向锁升级为轻量级锁。
 - 轻量级锁的依据是 对于绝大部分的锁，在整个生命周期内都是不会存在竞争的。
@@ -374,6 +368,6 @@ while (true) {
 }
 ```
 
-##### 重量级锁
+#### 重量级锁
 Synchronized是通过对象内部的一个叫做监视器（Monitor）来实现的。但是监视器本质又是依赖于底层操作系统的mutex lock来实现的。而操作系统实现线程之间的切换这就需要从用户态转为内核态，这个成本比较高，状态之前的切换需要很长的时间，So， 这种依赖依赖于操作系统Mutex Lock实现的锁称之为重量级锁。
 
