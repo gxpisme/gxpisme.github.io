@@ -156,9 +156,11 @@ OC：老年代大小
 - Parallel Old 多线程工作收集器（标记整理算法）
 - CMS 多线程工作收集器（标记清除算法）
 
+```
 Serial 和 Serial Old 配合
 ParNew 和 CMS 配合
 Parallel Scavenge 和 Parallel Old 配合
+```
 
 CMS收集器是一种以获取最短回收停顿时间为目标的收集器。
 
