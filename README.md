@@ -64,12 +64,12 @@
  - [JAVA-锁-Synchronized](java-synchronized)
  - [JAVA-锁-ReentrantLock](java-reentrantlock)
  - [JAVA-单例](java-instance)
- - [JAVA-动态代理](java-dynamic-proxy-study-note)
+ - [JAVA-切面 AOP](java-aop)
+ - [JAVA-动态代理 AOP原理](java-dynamic-proxy)
  - [JAVA-Metaspace](java-metaspace)
  
 ### 应用程序-Java之Spring
  - [Spring-注册Bean](spring-register-bean)
- - [Spring-切面 AOP](spring-java-aop)
 
 ## 缓存-redis
  - [关于Redis的思考](redis-think)
