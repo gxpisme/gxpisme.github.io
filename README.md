@@ -68,7 +68,7 @@
  - [JAVA-动态代理](java-dynamic-proxy-study-note)
  - [JAVA-Metaspace](java-metaspace)
  
- ### 应用程序-Java之Spring
+### 应用程序-Java之Spring
  - [Spring-注册Bean](spring-register-bean)
 
 ## 缓存-redis
