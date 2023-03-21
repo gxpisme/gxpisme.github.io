@@ -61,7 +61,6 @@
  - [JAVA-垃圾回收-三色标记](java-garbage-tri-color)
  - [JAVA-类加载](java-classloader)
  - [JAVA-class类文件结构](/mynote/java_class_struct)
- - [JAVA-切面 AOP(Aspect Oriented Programming)](java-aop)
  - [JAVA-锁-Synchronized](java-synchronized)
  - [JAVA-锁-ReentrantLock](java-reentrantlock)
  - [JAVA-单例](java-instance)
@@ -70,6 +69,7 @@
  
 ### 应用程序-Java之Spring
  - [Spring-注册Bean](spring-register-bean)
+ - [Spring-切面 AOP](spring-java-aop)
 
 ## 缓存-redis
  - [关于Redis的思考](redis-think)
