@@ -57,14 +57,15 @@
 ## 应用程序-java
  - [JAVA-内存管理](java-memory-manage)
  - [JAVA-内存模型-JMM](java-memory-model)
+ - [JAVA-垃圾回收](java-garbage-collector)
+ - [JAVA-垃圾回收-三色标记](java-garbage-tri-color)
+ - [JAVA-类加载](java-classloader)
+ - [JAVA-class类文件结构](/mynote/java_class_struct)
  - [JAVA 切面 AOP(Aspect Oriented Programming)](java-aop)
  - [JAVA锁-Synchronized](java-synchronized)
  - [JAVA锁-ReentrantLock](java-reentrantlock)
  - [JAVA-单例](java-instance)
  - [JAVA-动态代理](java-dynamic-proxy-study-note)
- - [JAVA-类加载](java-classloader)
- - [JAVA-垃圾回收](java-garbage-collector)
- - [JAVA-垃圾回收-三色标记](java-garbage-tri-color)
  - [JAVA-Metaspace](java-metaspace)
  - [Spring-注册Bean](spring-register-bean)
 
