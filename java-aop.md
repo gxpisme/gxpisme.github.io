@@ -1,13 +1,13 @@
-# JAVA 切面 AOP(Aspect Oriented Programming)
+# JAVA 切面 AOP
 
 > AOP (Aspect Oriented Programming) 面向切面编程。
-
+> 
 > 感觉名字吊的不行，其实也就那样。
-
+> 
 > 说下自己的理解：其实就是不侵入业务代码，针对业务代码做的一些操作。做的这些操作也是写的一些代码,
-
+>
 > 写的这些代码和业务代码一起编译的时候，这些代码就会找到业务代码中具体的位置，植入到业务代码中，
-
+>
 > 最终编译成JAVA的字节码，就可以实现相应的功能。
 
 - 概念只是概念，动手操作，才能加深理解。
@@ -286,6 +286,10 @@ public class ServiceAspect {
     }
 ```
 
+# 原理
+## 基于接口interface proxy
+
+## 基于类cglib
 
 
 ## 参考资料
