@@ -61,11 +61,11 @@
  - [JAVA-垃圾回收-三色标记](java-garbage-tri-color)
  - [JAVA-类加载](java-classloader)
  - [JAVA-class类文件结构](/mynote/java_class_struct)
- - [JAVA-锁-Synchronized](java-synchronized)
- - [JAVA-锁-ReentrantLock](java-reentrantlock)
- - [JAVA-单例](java-instance)
  - [JAVA-切面 AOP](java-aop)
  - [JAVA-动态代理 AOP原理](java-dynamic-proxy)
+ - [JAVA-单例](java-instance)
+ - [JAVA-锁-Synchronized](java-synchronized)
+ - [JAVA-锁-ReentrantLock](java-reentrantlock)
  - [JAVA-Metaspace](java-metaspace)
  
 ### 应用程序-Java之Spring
