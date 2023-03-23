@@ -127,7 +127,7 @@ public class T {
 
 <a name="rElPe"></a>
 ### 举例
-线程1，获取A锁，再获取B锁，然后进行操作，释放B锁，释放A锁。<br />线程2，获取B锁，在获取A锁，然后进行操作，释放A锁，释放B锁。<br />![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2023/png/177252/1679560975852-469cc92c-dcbf-4b86-924d-ed3f738376f2.png#clientId=u30dd6475-37b0-4&from=paste&height=249&id=u4b8fed43&name=image.png&originHeight=498&originWidth=876&originalType=binary&ratio=2&rotation=0&showTitle=false&size=100167&status=done&style=none&taskId=uc1eb1e39-43b2-4c07-989f-c83291cabdb&title=&width=438)<br />如图所示此时线程1获取A锁成功，线程2获取B锁成功；线程1再去获取B锁失败，线程2再去获取A锁失败。<br />这时情况是线程1持有A锁要获取B锁，线程2持有B锁要获取A锁，造成死锁。
+线程1，获取A锁，再获取B锁，然后进行操作，释放B锁，释放A锁。<br />线程2，获取B锁，在获取A锁，然后进行操作，释放A锁，释放B锁。<br />![image.png](image/java-locks-1.png)<br />如图所示此时线程1获取A锁成功，线程2获取B锁成功；线程1再去获取B锁失败，线程2再去获取A锁失败。<br />这时情况是线程1持有A锁要获取B锁，线程2持有B锁要获取A锁，造成死锁。
 
 <a name="SKElb"></a>
 ### 分析死锁的条件
