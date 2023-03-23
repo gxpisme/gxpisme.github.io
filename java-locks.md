@@ -56,7 +56,7 @@ CAS会带来ABA问题，什么是ABA问题呢？A变为了B，然后从B又变�
 ## 锁升级（偏向锁 -> 轻量级锁 -> 重量级锁）
 synchronized会有锁升级的过程：偏向锁 -> 轻量级锁 -> 重量级锁。<br />偏向锁：就是乐观锁，会存储锁信息线程，通过CAS来进行判定。<br />轻量级锁：也被称为自旋锁，不断地自旋来获取锁。<br />重量级锁：会用操作系统的锁。
 
-synchronized的分析文章
+[synchronized的分析文章](java-synchronized)
 <a name="uBxQp"></a>
 ## 可重入锁
 可重入锁：指的是同一个线程能够多次获取同一个锁。synchronized 和 ReentrantLock，都是可重入锁。
