@@ -174,7 +174,7 @@ mysql> show variables like 'innodb_undo_tablespaces';
 
 <img src="/image/mysql-innodb-architecuture-11.png" alt="image.png" style="width: 100px;">
 
-> 存储的是临时表的相关信息，例如大数据量排序时会生成临时表。
+> 存储的是临时表的相关信息，例如大数据量排序时会生成临时表，也可直接创建临时表。
 
 通过这个参数innodb_temp_data_file_path来控制。
 ```sql
@@ -189,6 +189,9 @@ mysql> show variables like 'innodb_temp_data_file_path';
 这里说下这个value的含义，临时表空间名字为ibtmp1，初始值12M，大小自动增长。
 
 对应文件存在MySQL数据目录下，即：`/path/to/mysql/data/ibtmp1`。
+
+
+
 <a name="QV8cz"></a>
 #### redo 日志
 <img src="/image/mysql-innodb-architecuture-12.png" alt="image.png" style="width: 300px;"><br />默认情况下会有两个文件，存放在MySQL数据目录下。
