@@ -106,7 +106,7 @@ mysql> show variables like 'datadir';
 ```
 <a name="Ctmoc"></a>
 #### 系统表空间：System Tablespace
-<img src="/image/mysql-innodb-architecuture-7.png" alt="image.png" style="width: 300px;"><br />通过参数innodb_data_file_path来进行控制的。
+<img src="/image/mysql-innodb-architecuture-7.png" alt="image.png" style="width: 100px;"><br />通过参数innodb_data_file_path来进行控制的。
 ```sql
 mysql> show variables like 'innodb_data_file_path';
 +-----------------------+------------------------+
@@ -121,7 +121,7 @@ mysql> show variables like 'innodb_data_file_path';
 系统表空间包含Double Write缓冲、Undo 日志、Change 缓冲、InnoDB 数据字典。
 <a name="raSnX"></a>
 #### 独立表空间：Table Tablespaces
-<img src="/image/mysql-innodb-architecuture-8.png" alt="image.png" style="width: 300px;"><br />通过参数innodb_file_per_table来进行控制的。
+<img src="/image/mysql-innodb-architecuture-8.png" alt="image.png" style="width: 100px;"><br />通过参数innodb_file_per_table来进行控制的。
 ```sql
 
 mysql> show variables like 'innodb_file_per_table';
@@ -148,7 +148,7 @@ t1.ibd
 ```
 <a name="DjiJm"></a>
 #### 通用表空间：General Tablespaces
-<img src="/image/mysql-innodb-architecuture-9.png" alt="image.png" style="width: 300px;"><br />通过 `CREATE TABLESPACE tablespace_name ADD DATAFILE 'file_name'`来添加。
+<img src="/image/mysql-innodb-architecuture-9.png" alt="image.png" style="width: 100px;"><br />通过 `CREATE TABLESPACE tablespace_name ADD DATAFILE 'file_name'`来添加。
 ```sql
 mysql> CREATE TABLESPACE `ts1` ADD DATAFILE 'ts1.ibd' Engine=InnoDB;
 ```
@@ -156,7 +156,7 @@ mysql> CREATE TABLESPACE `ts1` ADD DATAFILE 'ts1.ibd' Engine=InnoDB;
 
 <a name="gk0Rr"></a>
 #### undo 表空间：Undo Tablespaces
-<img src="/image/mysql-innodb-architecuture-10.png" alt="image.png" style="width: 300px;"><br />默认存放在系统表空间ibdata1中。
+<img src="/image/mysql-innodb-architecuture-10.png" alt="image.png" style="width: 100px;"><br />默认存放在系统表空间ibdata1中。
 
 也可以通过参数进行开启，默认未开启。后面这个功能参数会被废弃掉。
 ```sql
@@ -172,7 +172,7 @@ mysql> show variables like 'innodb_undo_tablespaces';
 <a name="v1KGX"></a>
 #### 临时表空间：The Temporary Tablespace
 
-<img src="/image/mysql-innodb-architecuture-11.png" alt="image.png" style="width: 300px;">
+<img src="/image/mysql-innodb-architecuture-11.png" alt="image.png" style="width: 100px;">
 
 > 存储的是临时表的相关信息，例如大数据量排序时会生成临时表。
 
