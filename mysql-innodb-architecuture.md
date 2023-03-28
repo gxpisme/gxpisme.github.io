@@ -39,13 +39,14 @@ mysql> show processlist;
 ### 读
 <a name="YoNGn"></a>
 #### 磁盘加载数据
-![image.png](/image/mysql-innodb-architecuture-1.png)
+
+<img src="/image/mysql-innodb-architecuture-1.png" alt="image.png" style="width: 300px;">
 <br />计算机局部性原理：是指CPU访问存储器时，无论是存取指令还是存取数据，所访问的存储单元都趋于聚集在一个较小的连续区域中。<br />从磁盘加载数据时，会把相邻的数据也一同加载进来，下次用到就不用去磁盘拿数据了。
 
 磁盘加载数据到Buffer Pool中。
 <a name="MCHAI"></a>
 #### 自适应哈希索引
-![image.png](/image/mysql-innodb-architecuture-2.png)
+<img src="/image/mysql-innodb-architecuture-2.png" alt="image.png" style="width: 300px;">
 
 自适应哈希索引，是InnoDB引擎的内部的，工作原理就是将热点数据建立为哈希表，时间复杂度为O(1)，能够更快速的找到数据。
 
@@ -64,12 +65,12 @@ mysql> show variables like 'innodb_adaptive_hash_index';
 ### 写
 <a name="L2G4E"></a>
 #### 第①步 Undo日志缓冲：Undo Buffer
-![image.png](/image/mysql-innodb-architecuture-3.png)<br />第①步先写入Undo Buffer中，然后Undo Buffer刷新到磁盘中（默认系统表空间ibdata1，也可指定Undo表空间）。<br />用途：事务回滚（rollback）、MVCC。
+<img src="/image/mysql-innodb-architecuture-3.png" alt="image.png" style="width: 300px;"><br />第①步先写入Undo Buffer中，然后Undo Buffer刷新到磁盘中（默认系统表空间ibdata1，也可指定Undo表空间）。<br />用途：事务回滚（rollback）、MVCC。
 
 MVCC用于提高读写并发，很好的提升了性能，阿里集团Tair中间件Tair进行参考了这个将字符串做了版本号，有效提高了性能。
 <a name="ofs7X"></a>
 #### 第②步 Redo日志缓冲：Redo Log Buffer
-![image.png](/image/mysql-innodb-architecuture-4.png)<br />第②步写入Redo Log Buffer，然后刷新到磁盘（ib_logfile0 ib_logfile1）中。<br />用途：当数据库意外宕机后，可根据redo日志进行数据恢复，提高数据可用性。
+<img src="/image/mysql-innodb-architecuture-4.png" alt="image.png" style="width: 300px;"><br />第②步写入Redo Log Buffer，然后刷新到磁盘（ib_logfile0 ib_logfile1）中。<br />用途：当数据库意外宕机后，可根据redo日志进行数据恢复，提高数据可用性。
 
 由于redo log文件打开并没有使用O_DIRECT，因此重做日志缓冲先写入文件系统缓存，为了确保redo log写入磁盘，必须进行一次fsync操作。<br />innodb_flush_log_at_trx_commit 参数用来控制重做日志刷新到磁盘的策略。
 
@@ -87,10 +88,10 @@ mysql> show variables like 'innodb_flush_log_at_trx_commit';
 相关知识点：redo log都是以512字节进行存储的，称为一个块。由于redo log块的大小和磁盘扇区一样大小，都是512字节。因此redo log从内存刷到磁盘，可以保证原子性。
 <a name="IDQuC"></a>
 #### 第③步 变更缓冲：Change Buffer
-![image.png](/image/mysql-innodb-architecuture-5.png)<br />第③步写入Change Buffer，然后Merge到索引上。InnoDB的插入缓冲也是包含在这里的。<br />适用范围：仅用于非唯一索引。因为如果是唯一索引的话还要去Buffer Pool中进行查看是否唯一，就失去了意义。<br />用途：将多次写，合并为一次，提升插入效率，
+<img src="/image/mysql-innodb-architecuture-5.png" alt="image.png" style="width: 300px;"><br />第③步写入Change Buffer，然后Merge到索引上。InnoDB的插入缓冲也是包含在这里的。<br />适用范围：仅用于非唯一索引。因为如果是唯一索引的话还要去Buffer Pool中进行查看是否唯一，就失去了意义。<br />用途：将多次写，合并为一次，提升插入效率，
 <a name="BFDnw"></a>
 #### 第④步 双写：Double Write Buffer
-![image.png](/image/mysql-innodb-architecuture-6.png)<br />第④步双写<br />原因：缓冲区Buffer Pool与磁盘交互最小单元为4KB，但是InnoDB中最小的单位是16KB，直接往磁盘独立表空间上刷数据时，可能存在刷一部分就意外宕机了，这部分数据是不完整的，无法被识别的。<br />工作机制：先把Buffer Pool中的数据刷到系统表空间ibdata1中，然后再往独立表空间上刷数据，若刷的过程中意外宕机了，那么可以从系统表空间ibdata1中进行数据恢复，提高了数据可靠性。
+<img src="/image/mysql-innodb-architecuture-6.png" alt="image.png" style="width: 300px;"><br />第④步双写<br />原因：缓冲区Buffer Pool与磁盘交互最小单元为4KB，但是InnoDB中最小的单位是16KB，直接往磁盘独立表空间上刷数据时，可能存在刷一部分就意外宕机了，这部分数据是不完整的，无法被识别的。<br />工作机制：先把Buffer Pool中的数据刷到系统表空间ibdata1中，然后再往独立表空间上刷数据，若刷的过程中意外宕机了，那么可以从系统表空间ibdata1中进行数据恢复，提高了数据可靠性。
 <a name="pIHsO"></a>
 ### 磁盘
 这里的MySQL数据目录是：`/path/to/mysql/data`
@@ -105,7 +106,7 @@ mysql> show variables like 'datadir';
 ```
 <a name="Ctmoc"></a>
 #### 系统表空间：System Tablespace
-![image.png](/image/mysql-innodb-architecuture-7.png)<br />通过参数innodb_data_file_path来进行控制的。
+<img src="/image/mysql-innodb-architecuture-7.png" alt="image.png" style="width: 300px;"><br />通过参数innodb_data_file_path来进行控制的。
 ```sql
 mysql> show variables like 'innodb_data_file_path';
 +-----------------------+------------------------+
@@ -120,7 +121,7 @@ mysql> show variables like 'innodb_data_file_path';
 系统表空间包含Double Write缓冲、Undo 日志、Change 缓冲、InnoDB 数据字典。
 <a name="raSnX"></a>
 #### 独立表空间：Table Tablespaces
-![image.png](/image/mysql-innodb-architecuture-8.png)<br />通过参数innodb_file_per_table来进行控制的。
+<img src="/image/mysql-innodb-architecuture-8.png" alt="image.png" style="width: 300px;"><br />通过参数innodb_file_per_table来进行控制的。
 ```sql
 
 mysql> show variables like 'innodb_file_per_table';
@@ -147,7 +148,7 @@ t1.ibd
 ```
 <a name="DjiJm"></a>
 #### 通用表空间：General Tablespaces
-![image.png](/image/mysql-innodb-architecuture-9.png)<br />通过 `CREATE TABLESPACE tablespace_name ADD DATAFILE 'file_name'`来添加。
+<img src="/image/mysql-innodb-architecuture-9.png" alt="image.png" style="width: 300px;"><br />通过 `CREATE TABLESPACE tablespace_name ADD DATAFILE 'file_name'`来添加。
 ```sql
 mysql> CREATE TABLESPACE `ts1` ADD DATAFILE 'ts1.ibd' Engine=InnoDB;
 ```
@@ -155,7 +156,7 @@ mysql> CREATE TABLESPACE `ts1` ADD DATAFILE 'ts1.ibd' Engine=InnoDB;
 
 <a name="gk0Rr"></a>
 #### undo 表空间：Undo Tablespaces
-![image.png](/image/mysql-innodb-architecuture-10.png)<br />默认存放在系统表空间ibdata1中。
+<img src="/image/mysql-innodb-architecuture-10.png" alt="image.png" style="width: 300px;"><br />默认存放在系统表空间ibdata1中。
 
 也可以通过参数进行开启，默认未开启。后面这个功能参数会被废弃掉。
 ```sql
@@ -170,7 +171,9 @@ mysql> show variables like 'innodb_undo_tablespaces';
 
 <a name="v1KGX"></a>
 #### 临时表空间：The Temporary Tablespace
-![image.png](/image/mysql-innodb-architecuture-11.png)
+
+<img src="/image/mysql-innodb-architecuture-11.png" alt="image.png" style="width: 300px;">
+
 > 存储的是临时表的相关信息，例如大数据量排序时会生成临时表。
 
 通过这个参数innodb_temp_data_file_path来控制。
@@ -188,7 +191,7 @@ mysql> show variables like 'innodb_temp_data_file_path';
 对应文件存在MySQL数据目录下，即：`/path/to/mysql/data/ibtmp1`。
 <a name="QV8cz"></a>
 #### redo 日志
-![image.png](/image/mysql-innodb-architecuture-12.png)<br />默认情况下会有两个文件，存放在MySQL数据目录下。
+<img src="/image/mysql-innodb-architecuture-12.png" alt="image.png" style="width: 300px;"><br />默认情况下会有两个文件，存放在MySQL数据目录下。
 ```sql
 bash# ls -lh /path/to/mysql/data/ib_logfile*
 -rw-r----- 1 mysql mysql 48M Mar 24 09:32 /path/to/mysql/data/ib_logfile0
