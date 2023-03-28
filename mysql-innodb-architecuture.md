@@ -67,7 +67,7 @@ mysql> show variables like 'innodb_adaptive_hash_index';
 #### 第①步 Undo日志缓冲：Undo Buffer
 <img src="/image/mysql-innodb-architecuture-3.png" alt="image.png" style="width: 300px;"><br />第①步先写入Undo Buffer中，然后Undo Buffer刷新到磁盘中（默认系统表空间ibdata1，也可指定Undo表空间）。<br />用途：事务回滚（rollback）、MVCC。
 
-MVCC用于提高读写并发，很好的提升了性能，阿里集团Tair中间件Tair进行参考了这个将字符串做了版本号，有效提高了性能。
+MVCC用于提高读写并发，很好的提升了性能，阿里集团中间件Tair中的TairString也加了版本号，同样用于提高读写并发。
 <a name="ofs7X"></a>
 #### 第②步 Redo日志缓冲：Redo Log Buffer
 <img src="/image/mysql-innodb-architecuture-4.png" alt="image.png" style="width: 300px;"><br />第②步写入Redo Log Buffer，然后刷新到磁盘（ib_logfile0 ib_logfile1）中。<br />用途：当数据库意外宕机后，可根据redo日志进行数据恢复，提高数据可用性。
