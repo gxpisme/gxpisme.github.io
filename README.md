@@ -77,9 +77,10 @@
  - [缓存更新 Cache Aside Pattern](cache-aside-pattern)
 
 ## 数据库-MySql
- - [MySQL-InnoDB-架构图](mysql-innodb-architecuture)
  - [MySQL主从服务搭建](mysql-build-master-slave)
  - [MySQL主从复制](mysql-replication-theory)
+ - [MySQL-InnoDB-架构图](mysql-innodb-architecuture)
+ - [MySQL-InnoDB-索引](mysql-innodb-index)
  - [MySQL-InnoDB插入缓冲](mysql-innodb-insert-buffer)
  - [MySQL-InnoDB 行锁](mysql-innodb-row-lock)
  - [MySQL 慢SQL](mysql-slow-log)
