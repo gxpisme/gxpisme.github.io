@@ -12,13 +12,13 @@
 B+树演变历程：二叉查找树 -> 平衡二叉树 -> B+树。
 <a name="mUYBx"></a>
 ### 二叉查找树
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/546024/1679994050705-521d78d9-28ab-41fd-96e2-77a166e5da53.png#averageHue=%23f8f8f8&clientId=ucec3e780-810b-4&from=paste&height=255&id=ucef44fb7&name=image.png&originHeight=510&originWidth=1182&originalType=binary&ratio=2&rotation=0&showTitle=false&size=117324&status=done&style=none&taskId=uee2ce022-61f4-4d21-b7ad-e2ac8fd3755&title=&width=591)<br />左右两个图都是二叉查找树。<br />如果是左边的图，最多三次就能找到。<br />如果是右边的图，最多需要5次才能找到，可能退化为单链表，时间复杂度降低为O(n)。
+![image.png](/image/mysql-innodb-index-1.png)<br />左右两个图都是二叉查找树。<br />如果是左边的图，最多三次就能找到。<br />如果是右边的图，最多需要5次才能找到，可能退化为单链表，时间复杂度降低为O(n)。
 <a name="Kau9I"></a>
 ### 平衡二叉树
-在满足二叉查找树的基础上，需要满足任何节点的两个子树高度最大差1。<br />![image.png](https://cdn.nlark.com/yuque/0/2023/png/546024/1679994963327-8f1d8717-536e-48f0-9d4d-3ab06739406c.png#averageHue=%23f7f7f7&clientId=ucec3e780-810b-4&from=paste&height=248&id=u4ec15a17&name=image.png&originHeight=496&originWidth=1298&originalType=binary&ratio=2&rotation=0&showTitle=false&size=127958&status=done&style=none&taskId=u08be5309-1e3a-440b-aa83-ed11f312e99&title=&width=649)<br />在插入节点11时，节点8的左子树高度为0，节点8的右子树高度为2，左右子树高度差为2 > 1（定义的1）<br />所以需要旋转进行调整，调整完成后。节点8的左子树高度为1，节点8的右子树节点高度为1。左右子树高度差 0 < 1 满足平衡二叉树的定义。
+在满足二叉查找树的基础上，需要满足任何节点的两个子树高度最大差1。<br />![image.png](/image/mysql-innodb-index-2.png)<br />在插入节点11时，节点8的左子树高度为0，节点8的右子树高度为2，左右子树高度差为2 > 1（定义的1）<br />所以需要旋转进行调整，调整完成后。节点8的左子树高度为1，节点8的右子树节点高度为1。左右子树高度差 0 < 1 满足平衡二叉树的定义。
 <a name="f5FLN"></a>
 ### B+树
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/546024/1680060741808-63e3591e-f2bd-4cad-8628-0ad85d837416.png#averageHue=%23f3f3f3&clientId=u46195719-b1ba-4&from=paste&height=488&id=ube04f0a5&name=image.png&originHeight=976&originWidth=1672&originalType=binary&ratio=2&rotation=0&showTitle=false&size=298571&status=done&style=none&taskId=u314952a0-c15d-46fa-b83d-155501a08a6&title=&width=836)
+![image.png](/image/mysql-innodb-index-3.png)
 
 第一个扇出指向的叶子结点中的最大值 < 25<br />第二个扇出指向的叶子结点中的值范围  25 <= 值 < 50<br />第三个扇出指向的叶子结点中的值范围  50 <= 值 < 75<br />第四个扇出指向的叶子结点中的值范围  75 <= 值
 
@@ -50,19 +50,19 @@ name：建立了基于name的辅助索引
 |... | ...    | ... | ...   |
 ```
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/546024/1680007321671-703823d1-73a2-44c6-b40e-f82d32ce5d4f.png#averageHue=%23f3ece7&clientId=u0b7c3c09-43d2-4&from=paste&height=501&id=u55583439&name=image.png&originHeight=1002&originWidth=1762&originalType=binary&ratio=2&rotation=0&showTitle=false&size=346230&status=done&style=none&taskId=uc5551a79-233c-4d65-ad7f-ebcca36e37b&title=&width=881)
+![image.png](/image/mysql-innodb-index-4.png)
 
 最下一层就是叶子节点，存储了所有的记录。最下层是一个双向链表。<br />叶子节点即是索引又是数据，所以称InnoDB的主键索引是聚集索引Clustered Index。
 
 因此InnoDB的表必须有主键，如果没有显示指定主键，那么选个唯一索引作为主键，如果唯一主键也没有，那么系统会生成一个6字节长度的隐藏字段作为主键。
 <a name="Pempi"></a>
 ## 辅助索引（Secondary Indexes）
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/546024/1680009005220-f06611a8-07de-403f-a640-08fd5ace639e.png#averageHue=%23f3efec&clientId=ucd27d141-554e-4&from=paste&height=483&id=u9730e8a3&name=image.png&originHeight=966&originWidth=1652&originalType=binary&ratio=2&rotation=0&showTitle=false&size=309122&status=done&style=none&taskId=u649f3621-5921-4443-837d-d5ddb060ebe&title=&width=826)
+![image.png](/image/mysql-innodb-index-5.png)
 
 最下一层是叶子节点：叶子节点存储的是主键ID。
 <a name="EfnjZ"></a>
 ### 回表
-若有这样的SQL语句 `select * from user where name = '小泽';`<br />执行过程分两步<br />第一步：会走name的辅助索引，最终拿到主键ID，值为15。<br />第二步：根据主键值15，会走主键索引，最终拿到这条数据。<br />![image.png](https://cdn.nlark.com/yuque/0/2023/png/546024/1680009524189-c51c2d27-6f2d-4d70-8ed6-d9cbca266817.png#averageHue=%23eccfbb&clientId=ucd27d141-554e-4&from=paste&height=154&id=uefc5313f&name=image.png&originHeight=308&originWidth=368&originalType=binary&ratio=2&rotation=0&showTitle=false&size=36564&status=done&style=none&taskId=u48a99d53-8a4a-4d02-9b8b-5d59f25a1e1&title=&width=184)
+若有这样的SQL语句 `select * from user where name = '小泽';`<br />执行过程分两步<br />第一步：会走name的辅助索引，最终拿到主键ID，值为15。<br />第二步：根据主键值15，会走主键索引，最终拿到这条数据。<br />![image.png](/image/mysql-innodb-index-6.png)
 
 总结这条SQL语句共计走了两个索引，第二步走的主键索引就叫回表。
 <a name="tcDv7"></a>
@@ -98,7 +98,7 @@ mysql> select a,b from t;
 | 4 | 5 |
 +---+---+
 ```
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/546024/1680059830746-8e13aa5d-95a3-4cb7-a881-3424d418807b.png#averageHue=%23f3f3f3&clientId=u46195719-b1ba-4&from=paste&height=272&id=uc9d4eefb&name=image.png&originHeight=544&originWidth=1440&originalType=binary&ratio=2&rotation=0&showTitle=false&size=146015&status=done&style=none&taskId=udb75ae21-066c-4040-bb1b-598a4900ac6&title=&width=720)
+![image.png](/image/mysql-innodb-index-7.png)
 
 可以清晰的看出最下层，是以a先排序，然后b再排序。回答以下以下几个问题，更好的掌握下联合索引。
 
@@ -207,12 +207,12 @@ Variable_name: optimizer_switch
 # MyISAM存储引擎索引
 <a name="qVW4X"></a>
 ## 主键索引（Primary Key）
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/546024/1680081934977-b3620c1a-c5c3-4040-ae65-85d6ffcddd6a.png#averageHue=%23f2eae5&clientId=u46195719-b1ba-4&from=paste&height=579&id=u4a64175c&name=image.png&originHeight=1158&originWidth=2018&originalType=binary&ratio=2&rotation=0&showTitle=false&size=509277&status=done&style=none&taskId=ue960cd81-2238-4cd8-9e19-cadf289c129&title=&width=1009)
+![image.png](/image/mysql-innodb-index-8.png)
 
 叶子节点存储的是行记录的物理地址。
 <a name="C4CQw"></a>
 ## 辅助索引（Secondary Indexes）
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/546024/1680082435621-68aa90ca-3217-493a-85f5-48dc24e380b1.png#averageHue=%23f1e9e4&clientId=u46195719-b1ba-4&from=paste&height=585&id=u2b7e45b0&name=image.png&originHeight=1170&originWidth=2018&originalType=binary&ratio=2&rotation=0&showTitle=false&size=534787&status=done&style=none&taskId=uabbea322-09b8-48c0-a462-fa232004201&title=&width=1009)
+![image.png](/image/mysql-innodb-index-9.png)
 
 叶子节点存储的是行记录的物理地址。
 <a name="MIuJt"></a>
