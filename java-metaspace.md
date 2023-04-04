@@ -202,7 +202,7 @@ Metaspace主要分为两个空间，一个是non-class空间，另一个是class
 
 ​<br />
 ## 来个demo，练下手
-问：若class space空间默认为1G，non-class space ：class space = 5：1。那么MaxMetaspaceSize 应该是多少呢？<br />答案是：6G。<br />​<br />
+问：若class space空间默认为1G，non-class space ：class space = 5：1。那么MaxMetaspaceSize 应该是多少呢？<br />答案是：6G。Metaspace空间=non-class space + class space<br />​<br />
 # 一个类大概需要多少Metaspace空间
 一个类所需要的Metaspace空间，分别用到了Metaspace中的non-class space和class space。<br />​
 
