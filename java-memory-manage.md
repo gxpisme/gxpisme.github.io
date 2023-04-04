@@ -84,6 +84,11 @@ public class Dog {
 ![image.png](/image/java-memory-manage-seven.png)
 
 
+栈内存分为两类：一类是虚拟机栈(VM Stack)，一类是本地方法栈(Native Stack)
+
+另外单线程中还有一块区域存的是程序计数器，用于多线程切换保留当时执行的位置。
+
+
 **先来说说栈内存**
 如何设置栈内存大小呢？
 
