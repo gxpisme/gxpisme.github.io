@@ -53,6 +53,7 @@ while(flag) {
 ### 最后说下有序性。
 程序最终都会转为指令一步步运行，这些指令的执行顺序会被优化，所以最终执行的时候，并不是按照程序中所写的那样，从前往后，一步步执行。美团一篇文章有证明[https://tech.meituan.com/2014/09/23/java-memory-reordering.html](https://tech.meituan.com/2014/09/23/java-memory-reordering.html)。
 
+### 总结
 
 可见性：可以通过volatile、synchronized、final关键字来解决
 
