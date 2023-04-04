@@ -31,27 +31,27 @@ public class Dog {
 
 `Dog white = new Dog("小白");`
 
-不难理解，这里new出来的实例对象是需要存储起来的，那这个实例存在哪了呢？new出来的对象都存放到了一块内存上，这块内存叫堆（Heap）。
+不难理解，这里new出来的实例对象是需要存储起来的，那这个实例存在哪了呢？new出来的对象实例都存放到了一块内存上，这块内存叫堆（Heap）。
 
 ![image.png](/image/java-memory-manage-one.png)
 
 
-至于Dog这个类，Dog这个类有自己的属性name，有自己的方法say。这些信息，同样有地方存储。存储的地方称为方法区，在JDK1.8又称为元数据空间。
+至于Dog这个类，Dog这个类有自己的属性name，有自己的方法say。这些信息，被称为元数据，同样有地方存储。存储的地方称为方法区，在JDK1.8又称为元数据空间。
 
 ![image.png](/image/java-memory-manage-two.png)
 
-（yellow）大黄和（white）小白，这两个对象怎么知道自己属于哪个类呢？其实对象中会存在一个类型指针指向它的类型。用来知道（yellow）大黄属于Dog类的，知道（white）小白属于Dog类的。
+（yellow）大黄和（white）小白，这两个对象实例怎么知道自己属于哪个类呢？其实对象实例中会存在一个类型指针指向它的类型。用来知道（yellow）大黄属于Dog类的，知道（white）小白属于Dog类的。
 ​
 
 ![image.png](/image/java-memory-manage-three.png)
 
 
-在java中会有很多类，也会有很多对象，类信息都存在了方法区/元数据空间中，new出来的对象都存在了堆Heap中。
+在java中会有很多类，也会有很多对象实例，类信息都存在了方法区/元数据空间中，new出来的对象实例都存在了堆Heap中。
 ​
 
 ​
 
-在java中，会有很多线程一起工作。所有线程使用到的类，new出来的对象，都分别存放在了方法区/元数据空间、堆Heap中。所以堆Heap和元数据空间是所有线程共享的，共同拥有的。
+在java中，会有很多线程一起工作。所有线程使用到的类，new出来的对象实例，都分别存放在了方法区/元数据空间、堆Heap中。所以堆Heap和元数据空间是所有线程共享的，共同拥有的。
 ​
 
 ​
@@ -67,7 +67,7 @@ public class Dog {
 ![image.png](/image/java-memory-manage-five.png)
 
 
-栈帧中存储了对象指针，也就是Heap堆中的对象大黄的地址。
+栈帧中存储了对象指针，也就是Heap堆中的对象实例大黄的地址。
 
 ![image.png](/image/java-memory-manage-six.png)
 
@@ -121,7 +121,7 @@ Exception in thread "main" java.lang.StackOverflowError
 如何设置元数据空间大小呢？
 在JDK1.8中使用
 
-- -XX:MetaspaceSize   设置元数据空间大小
+- -XX:MetaspaceSize    设置元数据空间大小
 - -XX:MaxMetaspaceSize 设置元数据空间最大内存
 
 一般情况下，设置-XX:MetaspaceSize的值等于-XX:MaxMetaspaceSize的值
