@@ -56,6 +56,7 @@
 
 ## 应用程序-Java
  - [JAVA-内存管理](java-memory-manage)
+ - [JAVA-Metaspace](java-metaspace)
  - [JAVA-内存模型-JMM](java-memory-model)
  - [JAVA-垃圾回收](java-garbage-collector)
  - [JAVA-垃圾回收-三色标记](java-garbage-tri-color)
@@ -66,7 +67,6 @@
  - [JAVA-锁](java-locks)
  - [JAVA-锁-Synchronized](java-synchronized)
  - [JAVA-锁-ReentrantLock](java-reentrantlock)
- - [JAVA-Metaspace](java-metaspace)
  
 ### 应用程序-Java之Spring
  - [Spring-注册Bean](spring-register-bean)
