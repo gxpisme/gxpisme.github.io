@@ -1,5 +1,6 @@
 # JMM (Java Memory Model)
 
+## 回顾Java 内存管理
 先来回顾下Java的内存管理，看如下图所示。
 
 每个线程都有一块栈内存，多个线程共享堆内存和元数据空间内存。
@@ -9,6 +10,7 @@
 ![image.png](/image/java-memory-model-1.png)
 
 
+# JMM
 将共享的内存抽象一下，看下图所示：
 
 ![image.png](/image/java-memory-model-2.png)
@@ -17,14 +19,14 @@
 
 - Java线程对变量的所有操作都在工作内存中进行。
 
-
+## 三大特性：内存可见性、原子性、有序性
 
 Java内存模型是围绕在并发过程中如何处理三个特性来建立的。
 
 哪三个特性呢？它们分别是 内存可见性、原子性、有序性。
 
 
-先来说下内存可见性。
+### 先来说下内存可见性。
 
 由于java线程对变量的操作都在工作内存中，现在有两个java线程A、B，变量flag初始为true，线程A、B都有变量flag的操作，若线程A修改了变量flag的值，那线程B的工作内存变量flag还是旧值。这就是内存可见性。
 
@@ -34,18 +36,21 @@ flag = true;
 // 线程A 虽然这里修改了
 flag = false;
 
-// 线程B 这里会一直执行
+// 线程B 但这里会一直执行，因为线程B中的工作内存flag变量的值还是为true
 while(flag) {
 }
 ```
 
-再来说下原子性。
+### 再来说下原子性。
+
 原子性就是一个事件要么发生，要么不发生，不存在中间状态。
+
 `i = 0;`  这个就是原子操作
+
 `i++;`   这个就是非原子操作，先获取到i的值，然后在对这个值+1。
 
 
-最后说下有序性。
+### 最后说下有序性。
 程序最终都会转为指令一步步运行，这些指令的执行顺序会被优化，所以最终执行的时候，并不是按照程序中所写的那样，从前往后，一步步执行。美团一篇文章有证明[https://tech.meituan.com/2014/09/23/java-memory-reordering.html](https://tech.meituan.com/2014/09/23/java-memory-reordering.html)。
 
 
@@ -54,6 +59,9 @@ while(flag) {
 原子性：可以通过synchronized关键字来解决
 
 有序性：可以通过volatile、synchronized关键字来解决
+
+
+## Happens-Before原则
 
 除了这三个特性，还有线程Happens-Before原则，规则定了多线程语义下，操作符合哪些规范和要求。
 
