@@ -96,6 +96,8 @@ volatile变量规则：对一个变量的写操作happens-before（先发生于�
 传递性：如果操作A happens-before（先发生于）操作B，操作B happens-before（先发生于）操作C，那就可以得出操作A happens-before（先发生于）操作C的结论。
 
 
+### as-if-serial原则
+
 还有一个原则是：as-if-serial原则，看起来是串行的。
 
 在单线程内，不管怎么重排序，最终的执行结果都是正确的。
