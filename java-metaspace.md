@@ -237,7 +237,7 @@ Klass：最大的一部分是 Klass 结构，它是固定大小的。<br />vtabl
 若配置如下
 ```java
 -XX:MetaspaceSize=256M
--XX:MaxMetaspaceSize=512G
+-XX:MaxMetaspaceSize=512M
 -XX:CompressedClassSpaceSize=1G
 ```
 ​
