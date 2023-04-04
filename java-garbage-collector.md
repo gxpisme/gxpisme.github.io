@@ -18,7 +18,6 @@ java的**内存**按照两个维度进行区分如下
 2. Common Area （公共区域）
 	- **Heap（堆）**
 	- Method Area（方法区）
-	- Runtime Constant Pool（运行时常量）
 
 Java垃圾存在`Common Area`公共区域中的`Heap`区。
 
