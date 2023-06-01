@@ -157,7 +157,7 @@ Metaspace内存分配给类加载器多大的内存呢？
 存储Klass结构的内存是连续的，从某个内存地址开始到某个内存地址结束。找到真正的Klass结构地址，需要加上一个base值。
 
 # Class Space 和 Non-Class Space
-由于对象类型指针压缩技术，Metaspace需要一块连续的内存存储Klass结构。但是对应非Klass结构的元数据，则不需要一块联系的内存进行存储。​
+由于对象类型指针压缩技术，Metaspace需要一块连续的内存存储Klass结构。但是对应非Klass结构的元数据，则不需要一块连续的内存进行存储。​
 
 联想到之前提到的全局VirtualSpaceList结构和全局空闲链表ChunkManager结构。
 
