@@ -178,8 +178,8 @@ public class One {
         ClassLoader classLoader = One.class.getClassLoader();
         // 如果classLoader有值，则就一直找classLoader的parent
         while (classLoader != null) {
-            classLoader = classLoader.getParent();
             System.out.println(classLoader.getClass().getName());
+            classLoader = classLoader.getParent();
         }
         System.out.println("-----");
         System.out.println(classLoader);
